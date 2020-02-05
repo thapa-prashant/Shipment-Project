@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    {% block css %}
+
+    {% endblock %}
+
+    <style>
+        .nav-items {
+            display: flex;
+            list-style-type: none;
+        }
+        .nav-item {
+            margin: 2px 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-bar">
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <a href="{% url 'shipmentapp:dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'shipmentapp:allshipments' %}">All Shipment</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'shipmentapp:dashboard' %}">Recently Requested Shipment</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'shipmentapp:dashboard' %}">Completed Shipments</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'shipmentapp:dashboard' %}">Failed Shipments</a>
+                </li>
+                <li class="nav-item">
+                    <span>{{email}}</span>
+                </li>
+                <li>
+                    <a href="{% url 'shipmentapp:logout' %}">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    
+    <footer>
+        <p style="width: 20%; margin: 40%">Developed by: <a href="">Sarobar Technology</a></p>
+    </footer>
+</body>
+</html>

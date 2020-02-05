@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <div style="width: 30%; margin: 10vh 35% auto;">
+        <h3 style="position: center;">Login to here</h3>
+        {% if error or request.GET.err %}
+            <li style="color: red;">Invalid username or password</li>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button> Login </button>
+        </form>
+</div>
+</div>
+{% endblock %}

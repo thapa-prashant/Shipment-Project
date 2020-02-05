@@ -1,0 +1,54 @@
+{% extends 'dashboardbase.html' %}
+
+
+{% block css %}
+<style>
+#shipments {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #shipments td, #shipments th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #shipments tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #shipments tr:hover {background-color: #ddd;}
+  
+  #shipments th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(33, 214, 142);
+    color: white;
+  }
+</style>
+
+{% endblock %}
+{% block content %}
+<h3 style="position: center;">All Shipments</h3>
+
+<table id="shipments">
+    <thead>
+        <tr>
+            <th>SN</th>
+            <th>Shipment Code</th>
+            <th>Requested Date</th>
+            <th>Receiver Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for shipment in shipments %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{shipment.shipment_code}}</td>
+            <td>{{shipment.created_at}}</td>
+            <td>{{shipment.receiver_name}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

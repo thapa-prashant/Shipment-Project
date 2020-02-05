@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kalpa Logistics</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div>
+                <a href="">KALPA LOGISTICS</a>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        <a href="{% url 'shipmentapp:home' %}">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="{% url 'shipmentapp:login' %}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="main">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <footer>
+
+    </footer>
+</body>
+</html>
