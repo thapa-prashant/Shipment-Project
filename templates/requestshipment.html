@@ -1,0 +1,15 @@
+{% extends 'dashboardbase.html' %}
+
+{% block content %}
+<div>
+    <div style="width: 40%; margin: 0 30%;">
+        <h3>Request Shipment</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button>Submit Data</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

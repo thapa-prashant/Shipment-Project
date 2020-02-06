@@ -62,6 +62,9 @@ class PartnerRequiredMixin(object):
             resp = requests.get('http://127.0.0.1:8000/api/v1/user-profile/', headers=self.headers)
             if 'partner' in resp.json():
                 self.partner = resp.json()['partner']['email']
+                self.company = resp.json()['partner']['partner_company']
+                self.address = resp.json()['partner']['address']
+                self.contact = resp.json()['partner']['contact']
             else:
                 return redirect('/login/?err=err')
         else:
@@ -93,5 +96,30 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         context['email'] = self.partner
         shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/"
         shipments = requests.get(shipmentlist_api, headers=self.headers)
-        context['shipments'] = shipments.json()['shipments']
+        context['shipments'] = shipments.json()['results']
         return context
+
+
+class RequestShipmentView(PartnerRequiredMixin, FormView):
+    template_name = "requestshipment.html"
+    form_class = ShipmentForm
+    success_url = reverse_lazy('shipmentapp:allshipments')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        citilist_api = "http://127.0.0.1:8000/api/v1/partner/city-list/"
+        resp = requests.get(citilist_api, headers=self.headers)
+        cities = resp.json()
+        kwargs['cities'] = cities
+        return kwargs
+
+    def form_valid(self, form):
+        request_shipment_api = "http://127.0.0.1:8000/api/v1/partner/shipment-create/"
+        data = form.cleaned_data
+        data['shipment_status'] = "Order Received"
+        data['sender_name'] = self.company
+        data['pickup_street_address'] = self.address
+        data['contact'] = self.contact
+        resp = requests.post(request_shipment_api, headers=self.headers, data=data)
+        print(resp.json())
+        return super().form_valid(form)

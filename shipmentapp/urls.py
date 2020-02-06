@@ -9,4 +9,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name="logout"),
     path('dashboard/', DashboardView.as_view(), name="dashboard"),
     path('all-shipments/', AllShipmentsView.as_view(), name="allshipments"),
+    path('request-shipment/', RequestShipmentView.as_view(), name="requestshipment"),
 ]
