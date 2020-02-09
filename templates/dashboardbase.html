@@ -10,12 +10,39 @@
     {% endblock %}
 
     <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .main-content {
+            margin: 10px 10%;
+        }
+        .nav-bar {
+            padding: 10px 10px auto;
+        }
         .nav-items {
             display: flex;
             list-style-type: none;
         }
         .nav-item {
             margin: 2px 5px;
+        }
+        .nav-item a {
+            border: 1px solid rgb(33, 214, 142);
+            padding: 5px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: bold;
+            color: rgb(33, 214, 142);
+        }
+        .nav-item .active{
+            background-color: rgb(33, 214, 142);
+            color: white;
+        }
+        .nav-item a:hover{
+            background-color: rgb(33, 214, 142);
+            color: white;
         }
     </style>
 </head>
@@ -24,20 +51,27 @@
         <nav class="nav-bar">
             <ul class="nav-items">
                 <li class="nav-item">
-                    <a href="{% url 'shipmentapp:dashboard' %}">Dashboard</a>
+                    <a class="{% block dashboard %}{% endblock %}" href="{% url 'shipmentapp:dashboard' %}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'shipmentapp:allshipments' %}">All Shipment</a>
+                    <a class="{% block requestshipment %}{% endblock %}" href="{% url 'shipmentapp:requestshipment' %}">Request Shipment</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'shipmentapp:requestshipment' %}">Request Shipment</a>
+                    <a href="{% url 'shipmentapp:allshipments' %}?status=all-shipment">All Shipment</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'shipmentapp:dashboard' %}">Completed Shipments</a>
+                    <a href="{% url 'shipmentapp:allshipments' %}?status=requested">Requested Shipments</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'shipmentapp:dashboard' %}">Failed Shipments</a>
+                    <a href="{% url 'shipmentapp:allshipments' %}?status=processing">Proccessing Shipments</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{% url 'shipmentapp:allshipments' %}?status=delivered">Successful Shipments</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'shipmentapp:allshipments' %}?status=failed">Failed Shipments</a>
+                </li>
+               
                 <li class="nav-item">
                     <span>{{email}}</span>
                 </li>
