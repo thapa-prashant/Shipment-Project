@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shipmentapp',
-    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -102,11 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-WEBPUSH_SETTINGS = {
-   "VAPID_PUBLIC_KEY": "BM-nlh0A4-nGMwmKTEMpBm0oy8ajs2HwOBE2PNLmKAhn58Pl_mFk0ifzRHFCFKn3Kn3tfcvgCAyy72dN_r0zKRY",
-   "VAPID_PRIVATE_KEY": "_7TUa1hLl1_baN2ug5mQnW3XQ2a7LdzY_lMa7mU3k5A",
-   "VAPID_ADMIN_EMAIL": "sangit@niroula@gmail.com"
-}
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
