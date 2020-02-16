@@ -57,6 +57,7 @@ class SendNotificationView(View):
         except TypeError:
             return JsonResponse(status=500, data={"message": "An error occurred"})
 
+
 class LoginView(FormView):
     template_name = "login.html"
     form_class = LoginForm
@@ -83,7 +84,32 @@ class LoginView(FormView):
         return super().form_valid(form)
 
 
+class RegistrationView(FormView):
+    template_name = "registration.html"
+    form_class = RegistrationForm
+    success_url = reverse_lazy('shipmentapp:dashboard')
 
+    def form_valid(self, form):
+        registration_api = "http://127.0.0.1:8000/api/v1/user-registration/"
+        email = form.cleaned_data["email"]
+        password = form.cleaned_data["password"]
+        partner_full_name = form.cleaned_data["partner_full_name"]
+        partner_company = form.cleaned_data["partner_company"]
+        contact = form.cleaned_data["contact"]
+        address = form.cleaned_data["address"]
+        username = form.cleaned_data["username"]
+        data = {'email':email,
+                'password':password,
+                'partner_full_name':partner_full_name,
+                'contact':contact,
+                'address':address,
+                'username':username,
+                'partner_company':partner_company
+                }
+        resp = requests.post(registration_api,data=data)
+        # resp_data = resp.text
+        # print(resp_data)
+        return super().form_valid(form)
 
 
 class PartnerRequiredMixin(object):
@@ -94,6 +120,8 @@ class PartnerRequiredMixin(object):
                 self.headers = {'Authorization': token}
                 resp = requests.get('http://127.0.0.1:8000/api/v1/user-profile/', headers=self.headers)
                 if 'partner' in resp.json():
+                    self.partner = resp.json()['partner']
+                    self.id = resp.json()['partner']['id']
                     self.partner = resp.json()['partner']['email']
                     self.company = resp.json()['partner']['partner_company']
                     self.address = resp.json()['partner']['address']
@@ -109,8 +137,44 @@ class PartnerRequiredMixin(object):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['email'] = self.partner
+        context['id'] = self.id
 
         return context
+
+
+class UserUpdateView(PartnerRequiredMixin,FormView):
+    template_name = 'userupdate.html'
+    form_class = RegistrationForm
+    success_url = reverse_lazy('shipmentapp:dashboard')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        posts = {
+            'company': self.partner.company,
+        }
+        context['form'] = RegistrationForm(initial=posts)
+        return context
+
+    def form_valid(self,form):
+        email = form.cleaned_data["email"]
+        password = form.cleaned_data["password"]
+        partner_full_name = form.cleaned_data["partner_full_name"]
+        partner_company = form.cleaned_data["partner_company"]
+        contact = form.cleaned_data["contact"]
+        address = form.cleaned_data["address"]
+        username = form.cleaned_data["username"]
+        data = {'email':email,
+            'password':password,
+            'partner_full_name':partner_full_name,
+            'contact':contact,
+            'address':address,
+            'username':username,
+            'partner_company':partner_company
+        }
+
+        response = requests.put("http://127.0.0.1:8000/api/v1/user-profile",data)
+        print(response.text)
+        return super().form_valid(form)        
 
 
 class LogoutView(PartnerRequiredMixin, View):
@@ -119,7 +183,7 @@ class LogoutView(PartnerRequiredMixin, View):
         return redirect('shipmentapp:home')
 
 
-class DashboardView(PartnerRequiredMixin, TemplateView):
+class DashboardView( PartnerRequiredMixin,TemplateView):
     template_name = "dashboard.html"
 
 
@@ -139,7 +203,7 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         if shipments.json()['next']:
             context['next'] = shipments.json()['next']
         if shipments.json()['previous']:
-            context['previous'] = shipment.json()['previous']
+            context['previous'] = shipments.json()['previous']
         return context
 
 
@@ -166,3 +230,7 @@ class RequestShipmentView(PartnerRequiredMixin, FormView):
         resp = requests.post(request_shipment_api, headers=self.headers, data=data)
         print(resp.json())
         return super().form_valid(form)
+
+
+class Demoview(TemplateView):
+    template_name = 'demoview.html'

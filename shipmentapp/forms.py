@@ -1,10 +1,46 @@
 from django import forms
+from django.contrib.auth import authenticate
+# from django.contrib.auth.models import User
 
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class RegistrationForm(forms.Form):
+    partner_full_name= forms.CharField()
+    partner_company= forms.CharField()    
+    contact = forms.CharField()
+    address = forms.CharField()
+    username=forms.CharField(label="Username", max_length=30,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
+    email=forms.EmailField()
+                      
+    password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())   
+    
+    # def clean_username(self):
+    #     username = self.cleaned_data.get('username')
+    #     User = 
+    #     if User.objects.filter(username=username).exists():
+    #         raise forms.ValidationError("Username already exists")
+    #     return username  
+    
+    def clean_confirm_password(self):
+        cleaned_data = super().clean()
+        password = cleaned_data['password']
+        confirm_password = cleaned_data['confirm_password']
+        if password != confirm_password:
+            raise forms.ValidationError("Passwords do not match")
+        return confirm_password  
+
+    
+    
+       
+        
+    
 
 
 PARCEL_TYPE = (

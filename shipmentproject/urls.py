@@ -2,10 +2,11 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from django.contrib import admin
-
+from shipmentapp.views import Demoview
 urlpatterns = [
     path('django-admin/', admin.site.urls),
-    path('', include('shipmentapp.urls')),
+    path('home', include('shipmentapp.urls')),
+    path('',Demoview.as_view(),name="demo")
 
 ]
 

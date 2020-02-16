@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <div class="panel">
+            <div class="panel-body"><b><p class="heading-boxed">Kalpa Mart</p></b></div></div>
+        </div>
+            </div>
+        <div class="video">
+            <center><iframe width="700" height="300" src="https://www.youtube.com/embed/U1tTRmlfvjw?controls=0&autoplay=1" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe></center>
+        </div>
+        <div class="coming">
+            <h1>Coming Soon</h1>
+        </div>
+    </div>
+    <style>
+        .heading {
+        font-family:helvetica;
+            color:#eb8842;
+            margin:0 0 30px;
+          position: relative;
+          padding-top:30px;
+          text-align: center;
+          letter-spacing: 0.06em;
+          font-size:40px;
+        }
+            .coming {
+          position: relative;
+          margin: 0 0 30px;
+          padding-top:30px;
+          text-align: center;
+          font-size: 40px;
+          letter-spacing: 0.06em;
+
+        }
+        .heading-boxed {
+          background: #eee;
+          border: 1px solid #ddd;
+
+        }
+        h1 {
+          position: relative;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-size: 7vw;
+          font-weight: 900;
+          text-decoration: none;
+          color: white;
+          display: inline-block;
+          background-size: 120% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          -moz-background-clip: text;
+          -moz-text-fill-color: transparent;
+          -ms-background-clip: text;
+          -ms-text-fill-color: transparent;
+          background-clip: text;
+          text-fill-color: transparent;
+          background-image: linear-gradient(45deg, #7794ff, #44107A, #FF1361, #FFF800);
+          animation: .8s shake infinite alternate;
+        }
+
+        @keyframes shake {
+          0% {
+            transform: skewX(-15deg);
+          }
+          5% {
+            transform: skewX(15deg);
+          }
+          10% {
+            transform: skewX(-15deg);
+          }
+          15% {
+            transform: skewX(15deg);
+          }
+          20% {
+            transform: skewX(0deg);
+          }
+          100% {
+            transform: skewX(0deg);
+          }
+        }
+        .style-3:before {
+          content: "";
+          border-top: 1px solid white;
+          position: absolute;
+          width: 300%;
+          top: 35%;
+          left: -100%;
+          z-index: -999;
+        }
+
+        .style-3:after {
+          content: "";
+          border-bottom: 1px solid white;
+          position: absolute;
+          width: 300%;
+          bottom: 35%;
+          left: -100%;
+          z-index: -999;
+        }
+
+
+
+
+    </style>
+</body>
+</html>
