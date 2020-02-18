@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.conf import settings
 import json
 
+
 class HomeView(TemplateView):
     template_name = "home.html"
 
@@ -122,7 +123,7 @@ class PartnerRequiredMixin(object):
                 if 'partner' in resp.json():
                     self.partner = resp.json()['partner']
                     self.id = resp.json()['partner']['id']
-                    self.partner = resp.json()['partner']['email']
+                    self.email = resp.json()['partner']['email']
                     self.company = resp.json()['partner']['partner_company']
                     self.address = resp.json()['partner']['address']
                     self.contact = resp.json()['partner']['contact']
@@ -136,45 +137,46 @@ class PartnerRequiredMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['email'] = self.partner
+        context['email'] = self.email
         context['id'] = self.id
-
         return context
 
 
 class UserUpdateView(PartnerRequiredMixin,FormView):
     template_name = 'userupdate.html'
-    form_class = RegistrationForm
-    success_url = reverse_lazy('shipmentapp:dashboard')
+    form_class = ProfileEditForm
+    def get_success_url(self):
+        return  reverse('shipmentapp:userupdate',kwargs={'pk':self.kwargs['pk']})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        instance= self.request.user
         posts = {
-            'company': self.partner.company,
+            'partner_company': self.partner['partner_company'],
+            'email':self.partner['email'],
+            'partner_full_name':self.partner['partner_full_name'],
+            'contact':self.contact,
+            'address':self.address
         }
-        context['form'] = RegistrationForm(initial=posts)
+
+        context['form'] = ProfileEditForm(initial=posts)
         return context
 
     def form_valid(self,form):
         email = form.cleaned_data["email"]
-        password = form.cleaned_data["password"]
         partner_full_name = form.cleaned_data["partner_full_name"]
         partner_company = form.cleaned_data["partner_company"]
         contact = form.cleaned_data["contact"]
         address = form.cleaned_data["address"]
-        username = form.cleaned_data["username"]
         data = {'email':email,
-            'password':password,
             'partner_full_name':partner_full_name,
             'contact':contact,
             'address':address,
-            'username':username,
             'partner_company':partner_company
         }
 
-        response = requests.put("http://127.0.0.1:8000/api/v1/user-profile",data)
-        print(response.text)
-        return super().form_valid(form)        
+        response = requests.put("http://127.0.0.1:8000/api/v1/userupdate/" + str(self.id) + "/",data=data,headers=self.headers)
+        return super().form_valid(form)
 
 
 class LogoutView(PartnerRequiredMixin, View):
@@ -183,7 +185,7 @@ class LogoutView(PartnerRequiredMixin, View):
         return redirect('shipmentapp:home')
 
 
-class DashboardView( PartnerRequiredMixin,TemplateView):
+class DashboardView(PartnerRequiredMixin,TemplateView):
     template_name = "dashboard.html"
 
 

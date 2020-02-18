@@ -8,8 +8,8 @@
 
         <form method="POST">
             {% csrf_token %}
-            {{form.as_p}}
-            <button> Update </button>
+            {{form}}
+            <a href="{% url 'shipmentapp:userupdate' id %}"> <button> Update </button></a>
         </form>
 </div>
 </div>

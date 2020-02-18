@@ -10,13 +10,13 @@ class LoginForm(forms.Form):
 
 
 class RegistrationForm(forms.Form):
-    partner_full_name= forms.CharField()
-    partner_company= forms.CharField()    
-    contact = forms.CharField()
-    address = forms.CharField()
+    partner_full_name= forms.CharField(widget=forms.TextInput())
+    partner_company= forms.CharField(widget=forms.TextInput())
+    contact = forms.CharField(widget=forms.TextInput())
+    address = forms.CharField(widget=forms.TextInput())
     username=forms.CharField(label="Username", max_length=30,
                                widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
-    email=forms.EmailField()
+    email=forms.EmailField(widget=forms.EmailInput())
                       
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())   
@@ -34,13 +34,14 @@ class RegistrationForm(forms.Form):
         confirm_password = cleaned_data['confirm_password']
         if password != confirm_password:
             raise forms.ValidationError("Passwords do not match")
-        return confirm_password  
+        return confirm_password
 
-    
-    
-       
-        
-    
+class ProfileEditForm(forms.Form):
+    partner_full_name = forms.CharField(widget=forms.TextInput())
+    partner_company = forms.CharField(widget=forms.TextInput())
+    contact = forms.CharField(widget=forms.TextInput())
+    address = forms.CharField(widget=forms.TextInput())
+    email = forms.EmailField(widget=forms.EmailInput())
 
 
 PARCEL_TYPE = (

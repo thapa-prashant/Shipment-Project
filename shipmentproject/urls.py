@@ -5,7 +5,7 @@ from django.contrib import admin
 from shipmentapp.views import Demoview
 urlpatterns = [
     path('django-admin/', admin.site.urls),
-    path('home', include('shipmentapp.urls')),
+    path('home/', include('shipmentapp.urls')),
     path('',Demoview.as_view(),name="demo")
 
 ]
