@@ -4,8 +4,10 @@
 
 <div>
     <div style="width: 30%; margin: 10vh 35% auto;">
-        <h3 style="position: center;">Login to here</h3>
-        
+        <h3 style="position: center;">Register here</h3>
+        {% if error or request.GET.err %}
+            <li style="color: red;">{{ error }}</li>
+        {% endif %}
         <form method="POST">
             {% csrf_token %}
             {{form.as_p}}

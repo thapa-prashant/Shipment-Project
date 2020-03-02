@@ -3,9 +3,8 @@ from django.contrib.auth import authenticate
 # from django.contrib.auth.models import User
 
 
-
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput())
+    email = forms.EmailField(widget=forms.EmailInput())
     password = forms.CharField(widget=forms.PasswordInput())
 
 
@@ -14,19 +13,16 @@ class RegistrationForm(forms.Form):
     partner_company= forms.CharField(widget=forms.TextInput())
     contact = forms.CharField(widget=forms.TextInput())
     address = forms.CharField(widget=forms.TextInput())
-    username=forms.CharField(label="Username", max_length=30,
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
     email=forms.EmailField(widget=forms.EmailInput())
-                      
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())   
-    
+
     # def clean_username(self):
     #     username = self.cleaned_data.get('username')
-    #     User = 
+    #     User =
     #     if User.objects.filter(username=username).exists():
     #         raise forms.ValidationError("Username already exists")
-    #     return username  
+    #     return username
     
     def clean_confirm_password(self):
         cleaned_data = super().clean()
@@ -41,7 +37,6 @@ class ProfileEditForm(forms.Form):
     partner_company = forms.CharField(widget=forms.TextInput())
     contact = forms.CharField(widget=forms.TextInput())
     address = forms.CharField(widget=forms.TextInput())
-    email = forms.EmailField(widget=forms.EmailInput())
 
 
 PARCEL_TYPE = (
@@ -74,3 +69,18 @@ class ShipmentForm(forms.Form):
     def __init__(self, cities=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['dropoff_city'].choices=cities
+
+
+class PasswordUpateForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput())
+    new_password = forms.CharField(widget=forms.PasswordInput())
+    confirm_new_password = forms.CharField(widget=forms.PasswordInput())
+
+
+    def clean_confirm_new_password(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data['new_password']
+        confirm_new_password = cleaned_data['confirm_new_password']
+        if new_password != confirm_new_password:
+            raise forms.ValidationError("Passwords do not match")
+        return confirm_new_password
