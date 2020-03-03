@@ -3,6 +3,7 @@
 
 
 {% block content %}
+<div class="container">
 <h3 style="position: center;">Dashboard</h3>
 <div>
     <div style="width: 30%; margin: 10vh 35% auto;">
@@ -11,6 +12,8 @@
 <a href="{% url 'shipmentapp:userupdate' %}"><button>Update</button></a>
         <a href="{% url 'shipmentapp:changepassword' %}"><button>Change Password</button></a>
             
+</div>
+
 </div>
 </div>
 {% endblock %}

@@ -202,7 +202,6 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?status=" + status + "&page=" + page_num
         shipments = requests.get(shipmentlist_api, headers=self.headers)
         context['shipments'] = shipments.json()['results']
-        print(shipments.json())
         context['shipment_type'] = status.upper()
         context['shipment_count'] = len(shipments.json()['results'])
         if shipments.json()['next']:
@@ -264,11 +263,10 @@ class PasswordChangeView(PartnerRequiredMixin,FormView):
         }
         response = requests.put("http://127.0.0.1:8000/api/v1/user/changepassword/", data=data,
                                 headers=self.headers)
-        print(response.json())
         if response.json().get('email'):
             return render(self.request,self.template_name,{'form':form,'error':'Old password is incorrect.'})
         return super().form_valid(form)
-        return super().form_valid(form)
+
 
 
 class Demoview(TemplateView):
