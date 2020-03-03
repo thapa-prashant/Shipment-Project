@@ -3,6 +3,7 @@
 
 {% block css %}
 <style>
+
 #shipments {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -13,11 +14,11 @@
     border: 1px solid #ddd;
     padding: 8px;
   }
-  
+
   #shipments tr:nth-child(even){background-color: #f2f2f2;}
-  
+
   #shipments tr:hover {background-color: #ddd;}
-  
+
   #shipments th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -38,6 +39,7 @@
             <th>Shipment Code</th>
             <th>Requested Date</th>
             <th>Receiver Information</th>
+            <th>Details</th>
         </tr>
     </thead>
     <tbody>
@@ -47,6 +49,7 @@
             <td>{{shipment.shipment_code}}</td>
             <td>{{shipment.created_at}}</td>
             <td>{{shipment.receiver_name}}</td>
+            <td><a href="{% url 'shipmentapp:shipmentdetail'  shipment.id %}">View Details</a></td>
         </tr>
         {% endfor %}
     </tbody>

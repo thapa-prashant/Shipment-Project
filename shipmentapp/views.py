@@ -202,12 +202,26 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?status=" + status + "&page=" + page_num
         shipments = requests.get(shipmentlist_api, headers=self.headers)
         context['shipments'] = shipments.json()['results']
+        print(shipments.json())
         context['shipment_type'] = status.upper()
         context['shipment_count'] = len(shipments.json()['results'])
         if shipments.json()['next']:
             context['next'] = shipments.json()['next']
         if shipments.json()['previous']:
             context['previous'] = shipments.json()['previous']
+        return context
+
+
+class ShipmentDetailView(PartnerRequiredMixin,TemplateView):
+    template_name = 'shipmentdetail.html'
+
+    def get_context_data(self, **kwargs):
+        self.id = self.kwargs['pk']
+        print(self.id)
+        shipmentdetail_api = 'http://127.0.0.1:8000/api/v1/partner/shipment-' + str(self.id) +'/detail/'
+        resp = requests.get(shipmentdetail_api,headers= self.headers)
+        context = super().get_context_data(**kwargs)
+        context['shipment'] = resp.json()
         return context
 
 
