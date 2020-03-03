@@ -53,17 +53,13 @@ MODE_OF_PAYMENT = (
 class ShipmentForm(forms.Form):
     receiver_name = forms.CharField(widget= forms.TextInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Receiver Name',
+        'placeholder': 'Your Name',
     }))
 
-
-    receiver_contact = forms.IntegerField(widget= forms.TextInput(attrs={
+    # receiver_contact = forms.IntegerField()
+    receiver_alt_contact = forms.IntegerField(required=False,widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Receiver contact',
-    }))
-    receiver_alt_contact = forms.IntegerField(required=False,widget= forms.TextInput(attrs={
-        'class': 'form-control mb-3',
-        'placeholder': 'Alt contact',
+        'placeholder': 'Your alt contact',
     }))
     dropoff_city = forms.ChoiceField(widget=forms.Select(attrs={
         "name": "select_0",
