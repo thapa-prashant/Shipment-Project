@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c55eb543-41bc-4836-a3ba-d30d6903a620" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipmentapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/shipmentapp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipmentapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/shipmentapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipmentproject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/shipmentproject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/allshipments.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/allshipments.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboardbase.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboardbase.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/passwordchange.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/passwordchange.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/userupdate.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userupdate.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +97,7 @@
       <workItem from="1581701941804" duration="17159000" />
       <workItem from="1582693149275" duration="8944000" />
       <workItem from="1583134419950" duration="8260000" />
-      <workItem from="1583211125555" duration="7472000" />
+      <workItem from="1583211125555" duration="7989000" />
     </task>
     <servers />
   </component>
