@@ -32,26 +32,27 @@
 
 <div class="container">
 
-<h3 style="position: center;">"{{shipment_type}}" Shipments ({{shipment_count}})</h3>
+<h3 class="mt-4 mb-4" style="position: center;">"{{shipment_type}}" Shipments ({{shipment_count}})</h3>
 
 
 
-<table id="example" class="table table-striped table-bordered" style="width:100%">
+<table id="example" class="display nowrap" style="width:100%">
   <thead>
-      <tr>
+      <tr style="background:  #21D68E">
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
-        <th>Receiver Information</th>
+        <th>Receiver Name</th>
       </tr>
   </thead>
   <tbody>
        {% for shipment in shipments %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{shipment.shipment_code}}</td>
+            <td><a href="{% url 'shipmentapp:shipmentdetail' shipment.id %}">{{ shipment.shipment_code }}</a></td>
             <td>{{shipment.created_at}}</td>
             <td>{{shipment.receiver_name}}</td>
+
         </tr>
         {% endfor %}
   </tbody>
@@ -60,23 +61,39 @@
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
-        <th>Receiver Information</th>
+        <th>Receiver Name</th>
       </tr>
   </tfoot>
 </table>
     </div>
-<script src="https://code.jquery.com/jquery-3.3.1.js" ></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" ></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" ></script>
+
+
+
+
 
 
 
 {% block js %}
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('#example').DataTable();
+
+
+$(document).ready(function() {
+    var table = $('#example').DataTable( {
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
+    } );
 } );
+
+
+
+
 </script>
+
+
+
+
 
 {% endblock %}
 
