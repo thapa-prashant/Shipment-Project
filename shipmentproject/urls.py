@@ -4,9 +4,12 @@ from django.conf import settings
 from django.contrib import admin
 from shipmentapp.views import Demoview
 urlpatterns = [
-    # re_path('^.*',Demoview.as_view(),name="demo"),
+
+    #re_path('^.*',Demoview.as_view(),name="demo"),
+    path('',Demoview.as_view(),name="demo"),
     path('django-admin/', admin.site.urls),
     path('', include('shipmentapp.urls')),
+    path('', include('warehouseapp.urls')),
 
 ]
 

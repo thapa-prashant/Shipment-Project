@@ -51,24 +51,70 @@ MODE_OF_PAYMENT = (
 )
 
 class ShipmentForm(forms.Form):
-    receiver_name = forms.CharField()
-    receiver_contact = forms.IntegerField()
-    receiver_alt_contact = forms.IntegerField(required=False)
-    dropoff_city = forms.ChoiceField()
-    dropoff_street_address = forms.CharField()
-    receiver_email = forms.EmailField()
-    parcel_type = forms.ChoiceField(choices=PARCEL_TYPE)
-    parcel_weight = forms.DecimalField()
-    parcel_length = forms.DecimalField()
-    parcel_width = forms.DecimalField()
-    parcel_height = forms.DecimalField()
-    parcel_total = forms.IntegerField()
+    receiver_name = forms.CharField(widget= forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Receiver Name',
+    }))
+
+    receiver_contact = forms.IntegerField(widget= forms.NumberInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Receiver contact',
+    }))
+    receiver_alt_contact = forms.IntegerField(required=False,widget= forms.NumberInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Alt contact',
+    }))
+    dropoff_city = forms.ChoiceField(widget=forms.Select(attrs={
+        "name": "select_0",
+        "class": "form-control"}))
+    dropoff_street_address = forms.CharField(widget= forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Street address',
+    }))
+    receiver_email = forms.EmailField(widget= forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'E-mail',
+    }))
+    parcel_type = forms.ChoiceField(choices=PARCEL_TYPE,widget=forms.Select(attrs={
+        "name": "select_0",
+        "class": "form-control"}))
+    parcel_weight = forms.DecimalField(widget= forms.NumberInput(attrs={
+        'class': 'form-control ',
+        'placeholder': 'Parcel weight',
+    }))
+    parcel_length = forms.DecimalField(widget= forms.NumberInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Parcel length',
+    }))
+    parcel_width = forms.DecimalField(widget= forms.NumberInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Parcel width',
+    }))
+    parcel_height = forms.DecimalField(widget= forms.NumberInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Alt Parcel height',
+    }))
+    parcel_total = forms.DecimalField(widget= forms.NumberInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Parcel total',
+    }))
     customer_payment_status = forms.BooleanField(required=False)
-    mode_of_payment = forms.ChoiceField(choices=MODE_OF_PAYMENT)
+    mode_of_payment = forms.ChoiceField(choices=MODE_OF_PAYMENT,widget=forms.Select(attrs={
+        "name": "select_0",
+        "class": "form-control"}))
 
     def __init__(self, cities=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['dropoff_city'].choices=cities
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        receiver_contact = cleaned_data['receiver_contact']
+        # receiver_alt_contact = cleaned_data['receiver_alt_contact']
+        if len(str(receiver_contact)) < 10:
+            raise forms.ValidationError("Your number should be at least 10 Characters")
+
+        return self.cleaned_data
 
 
 class PasswordUpateForm(forms.Form):
@@ -84,3 +130,14 @@ class PasswordUpateForm(forms.Form):
         if new_password != confirm_new_password:
             raise forms.ValidationError("Passwords do not match")
         return confirm_new_password
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data['new_password']
+
+        if len(new_password) < 6:
+            raise forms.ValidationError("Your password should be at least 6 Characters")
+
+        return self.cleaned_data
+
+    
