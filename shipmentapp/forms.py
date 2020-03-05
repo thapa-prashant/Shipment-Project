@@ -54,10 +54,44 @@ class RegistrationForm(forms.Form):
         return confirm_password
 
 class ProfileEditForm(forms.Form):
-    partner_full_name = forms.CharField(widget=forms.TextInput())
-    partner_company = forms.CharField(widget=forms.TextInput())
-    contact = forms.CharField(widget=forms.TextInput())
-    address = forms.CharField(widget=forms.TextInput())
+    partner_full_name = forms.CharField(widget= forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+
+    }))
+    partner_company = forms.CharField(widget= forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+
+    }))
+    contact = forms.CharField(widget= forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+
+    }))
+    address = forms.CharField(widget= forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+
+    }))
+    alt_contact = forms.CharField(required=False,widget= forms.TextInput(attrs={
+        'class': 'form-control ',
+
+    }))
+    website = forms.URLField(required=False,widget= forms.URLInput(attrs={
+        'class': 'form-control mb-3',
+
+    }))
+    description = forms.CharField(widget= forms.Textarea(attrs={
+        'class': 'form-control mb-3',
+        'placeholder':"Write about yourself!",
+
+    }))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        contact = cleaned_data['contact']
+        # receiver_alt_contact = cleaned_data['receiver_alt_contact']
+        if len(str(contact)) < 10:
+            raise forms.ValidationError("Your number should be at least 10 Characters")
+
+        return self.cleaned_data
 
 
 PARCEL_TYPE = (
@@ -74,16 +108,18 @@ MODE_OF_PAYMENT = (
 class ShipmentForm(forms.Form):
     receiver_name = forms.CharField(widget= forms.TextInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Receiver Name',
+        'placeholder': 'Your Name',
     }))
+
 
     receiver_contact = forms.IntegerField(widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Receiver contact',
+        'placeholder': 'Enter your contact',
     }))
+
     receiver_alt_contact = forms.IntegerField(required=False,widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Alt contact',
+        'placeholder': 'Your alternative contact no.',
     }))
     dropoff_city = forms.ChoiceField(widget=forms.Select(attrs={
         "name": "select_0",
@@ -139,9 +175,18 @@ class ShipmentForm(forms.Form):
 
 
 class PasswordUpateForm(forms.Form):
-    old_password = forms.CharField(widget=forms.PasswordInput())
-    new_password = forms.CharField(widget=forms.PasswordInput())
-    confirm_new_password = forms.CharField(widget=forms.PasswordInput())
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder':'enter old password'
+    }))
+    new_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder':'enter new password'
+    }))
+    confirm_new_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder':'confirm new password'
+    }))
 
 
     def clean_confirm_new_password(self):
@@ -159,6 +204,4 @@ class PasswordUpateForm(forms.Form):
         if len(new_password) < 6:
             raise forms.ValidationError("Your password should be at least 6 Characters")
 
-        return self.cleaned_data
-
-    
+        return new_password
