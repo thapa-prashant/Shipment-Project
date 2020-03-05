@@ -7,7 +7,6 @@ from django.utils import timezone
 from .models import *
 from .forms import *
 import requests
-
 from django.http import JsonResponse
 from django.conf import settings
 import json
@@ -65,11 +64,11 @@ class LoginView(FormView):
     success_url = reverse_lazy('shipmentapp:dashboard')
 
     def form_valid(self, form):
-        username = form.cleaned_data['username']
+        email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         login_api = "http://127.0.0.1:8000/api/v1/get-token/"
         data = {
-            'username': username,
+            'username': email,
             'password': password
         }
         try:
@@ -90,6 +89,10 @@ class RegistrationView(FormView):
     form_class = RegistrationForm
     success_url = reverse_lazy('shipmentapp:dashboard')
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['form'] = 'form'
+
     def form_valid(self, form):
         registration_api = "http://127.0.0.1:8000/api/v1/user-registration/"
         email = form.cleaned_data["email"]
@@ -98,18 +101,18 @@ class RegistrationView(FormView):
         partner_company = form.cleaned_data["partner_company"]
         contact = form.cleaned_data["contact"]
         address = form.cleaned_data["address"]
-        username = form.cleaned_data["username"]
         data = {'email':email,
                 'password':password,
                 'partner_full_name':partner_full_name,
                 'contact':contact,
                 'address':address,
-                'username':username,
                 'partner_company':partner_company
                 }
+
         resp = requests.post(registration_api,data=data)
-        # resp_data = resp.text
-        # print(resp_data)
+        print(resp.json())
+        if resp.json().get('fail'):
+            return render(self.request,self.template_name,{'form':form,'error':'Email already exists.'})
         return super().form_valid(form)
 
 
@@ -145,15 +148,15 @@ class PartnerRequiredMixin(object):
 class UserUpdateView(PartnerRequiredMixin,FormView):
     template_name = 'userupdate.html'
     form_class = ProfileEditForm
-    def get_success_url(self):
-        return  reverse('shipmentapp:userupdate',kwargs={'pk':self.kwargs['pk']})
+    success_url = reverse_lazy('shipmentapp:dashboard')
+    # def get_success_url(self):
+    #     return  reverse('shipmentapp:userupdate',kwargs={'pk':self.kwargs['pk']})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         instance= self.request.user
         posts = {
             'partner_company': self.partner['partner_company'],
-            'email':self.partner['email'],
             'partner_full_name':self.partner['partner_full_name'],
             'contact':self.contact,
             'address':self.address
@@ -163,19 +166,18 @@ class UserUpdateView(PartnerRequiredMixin,FormView):
         return context
 
     def form_valid(self,form):
-        email = form.cleaned_data["email"]
         partner_full_name = form.cleaned_data["partner_full_name"]
         partner_company = form.cleaned_data["partner_company"]
         contact = form.cleaned_data["contact"]
         address = form.cleaned_data["address"]
-        data = {'email':email,
-            'partner_full_name':partner_full_name,
-            'contact':contact,
-            'address':address,
-            'partner_company':partner_company
-        }
+        data = {
+                'partner_full_name': partner_full_name,
+                'contact': contact,
+                'address': address,
+                'partner_company': partner_company
+             }
 
-        response = requests.put("http://127.0.0.1:8000/api/v1/userupdate/" + str(self.id) + "/",data=data,headers=self.headers)
+        response = requests.put("http://127.0.0.1:8000/api/v1/update/" + str(self.id) + "/",data=data,headers=self.headers)
         return super().form_valid(form)
 
 
@@ -196,7 +198,7 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         status = self.request.GET.get('status', "all-shipment")
         page_num = self.request.GET.get('page_num', "1")
         context = super().get_context_data(**kwargs)
-        context['email'] = self.partner
+        context['email'] = self.email
         shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?status=" + status + "&page=" + page_num
         shipments = requests.get(shipmentlist_api, headers=self.headers)
         context['shipments'] = shipments.json()['results']
@@ -231,6 +233,27 @@ class RequestShipmentView(PartnerRequiredMixin, FormView):
         data['contact'] = self.contact
         resp = requests.post(request_shipment_api, headers=self.headers, data=data)
         print(resp.json())
+        return super().form_valid(form)
+
+
+class PasswordChangeView(PartnerRequiredMixin,FormView):
+    template_name = 'passwordchange.html'
+    form_class = PasswordUpateForm
+    success_url = reverse_lazy('shipmentapp:dashboard')
+
+    def form_valid(self, form):
+        old_password = form.cleaned_data['old_password']
+        new_password = form.cleaned_data['new_password']
+        data = {
+            'old_password': old_password,
+            'new_password': new_password
+        }
+        response = requests.put("http://127.0.0.1:8000/api/v1/user/changepassword/", data=data,
+                                headers=self.headers)
+        print(response.json())
+        if response.json().get('email'):
+            return render(self.request,self.template_name,{'form':form,'error':'Old password is incorrect.'})
+        return super().form_valid(form)
         return super().form_valid(form)
 
 
