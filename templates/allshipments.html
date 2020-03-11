@@ -29,26 +29,72 @@
 
 {% endblock %}
 {% block content %}
-<h3 style="position: center;">"{{shipment_type}}" Shipments ({{shipment_count}})</h3>
 
-<table id="shipments">
-    <thead>
-        <tr>
-            <th>SN</th>
-            <th>Shipment Code</th>
-            <th>Requested Date</th>
-            <th>Receiver Information</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for shipment in shipments %}
+<div class="container">
+
+<h3 class="mt-4 mb-4" style="position: center;">"{{shipment_type}}" Shipments ({{shipment_count}})</h3>
+
+
+
+<table id="example" class="display nowrap" style="width:100%">
+  <thead>
+      <tr style="background:  #21D68E">
+          <th>SN.</th>
+          <th>Shipment Code</th>
+        <th>Requested Date</th>
+        <th>Receiver Name</th>
+      </tr>
+  </thead>
+  <tbody>
+       {% for shipment in shipments %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{shipment.shipment_code}}</td>
+            <td><a href="{% url 'shipmentapp:shipmentdetail' shipment.id %}">{{ shipment.shipment_code }}</a></td>
             <td>{{shipment.created_at}}</td>
             <td>{{shipment.receiver_name}}</td>
+
         </tr>
         {% endfor %}
-    </tbody>
+  </tbody>
+  <tfoot>
+      <tr>
+          <th>SN.</th>
+          <th>Shipment Code</th>
+        <th>Requested Date</th>
+        <th>Receiver Name</th>
+      </tr>
+  </tfoot>
 </table>
+    </div>
+
+
+
+
+
+
+
+{% block js %}
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+    var table = $('#example').DataTable( {
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
+    } );
+} );
+
+
+
+
+</script>
+
+
+
+
+
+{% endblock %}
+
 {% endblock %}

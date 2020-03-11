@@ -1,0 +1,141 @@
+{% extends 'dashboardbase.html' %}
+
+{% block css %}
+<style>
+
+#shipments {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #shipments td, #shipments th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #shipments tr:nth-child(even){background-color: #f2f2f2;}
+
+  #shipments tr:hover {background-color: #ddd;}
+
+  #shipments th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(33, 214, 142);
+    color: white;
+  }
+</style>
+
+{% endblock %}
+{% block content %}
+<div class="container">
+<table id="shipments">
+    <thead>
+        <tr>
+            <th class="pb-3" colspan="2">"Shipment {{shipment.shipment_code}}" Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Shipment Status</td>
+            <td>{{shipment.shipment_code}}</td>
+        </tr>
+        <tr>
+            <td>Pickup Time</td>
+            <td>{{shipment.pickup_time}}</td>
+        </tr>
+        <tr>
+            <td>Dropoff Time Time</td>
+            <td>{{shipment.pickup_time}}</td>
+        </tr>
+        <tr>
+            <td>Sender Name</td>
+            <td>{{shipment.sender_name}}</td>
+        </tr>
+        <tr>
+            <td>Sender Email</td>
+            <td>{{shipment.sender_email}}</td>
+        </tr>
+        <tr>
+            <td>Pickup City</td>
+            <td>{{shipment.pickup_city}}</td>
+        </tr>
+
+        <tr>
+            <td>Pickup Street Address</td>
+            <td>{{shipment.pickup_street_address}}</td>
+        </tr>
+        <tr>
+            <td>Receiver Name</td>
+            <td>{{shipment.receiver_name}}</td>
+        </tr>
+        <tr>
+            <td>Receiver Email</td>
+            <td>{{shipment.receiver_email}}</td>
+        </tr>
+        <tr>
+            <td>Receiver Contact</td>
+            <td>{{shipment.receiver_contact}}</td>
+        </tr>
+        <tr>
+            <td>Receiver Alt Contact</td>
+            <td>{{shipment.receiver_alt_contact}}</td>
+        </tr>
+        <tr>
+            <td>Dropoff City</td>
+            <td>{{shipment.dropoff_city}}</td>
+        </tr>
+        <tr>
+            <td>Dropoff Street Address</td>
+            <td>{{shipment.dropoff_street_address}}</td>
+        </tr>
+
+        <tr>
+            <td>Parcel Type</td>
+            <td>{{ shipment.parcel_type }}</td>
+        </tr>
+        <tr>
+            <td>Parcel Barcode</td>
+            <td>{{shipment.parcel_barcode}}</td>
+        </tr>
+        <tr>
+            <td>Parcel Weight</td>
+            <td>{{shipment.parcel_weight}}</td>
+        </tr>
+        <tr>
+            <td>Parcel Length</td>
+            <td>{{shipment.parcel_length}}</td>
+        </tr>
+        <tr>
+            <td>Parcel Width</td>
+            <td>{{shipment.parcel_width}}</td>
+        </tr>
+        <tr>
+            <td>Parcel height</td>
+            <td>{{shipment.parcel_height}}</td>
+        </tr>
+        <tr>
+            <td>Parcel Weight</td>
+            <td>{{shipment.parcel_weight}}</td>
+        </tr>
+        <tr>
+            <td>Parcel Total</td>
+            <td>{{shipment.parcel_total}}</td>
+        </tr>
+        <tr>
+            <td>Customer Payment Status</td>
+            <td>{{shipment.customer_payment_status}}</td>
+        </tr>
+        <tr>
+            <td>Mode of Payment</td>
+            <td>{{ shipment.mode_of_payment }}</td>
+        </tr>
+        <tr>
+            <td>Shipping Charge</td>
+            <td>{{ shipment.shipping_charge }}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+{% endblock %}

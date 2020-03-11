@@ -12,6 +12,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name="logout"),
     path('dashboard/', DashboardView.as_view(), name="dashboard"),
     path('all-shipments/', AllShipmentsView.as_view(), name="allshipments"),
+    path('shipment-detail/<int:pk>/',ShipmentDetailView.as_view(),name="shipmentdetail"),
     path('request-shipment/', RequestShipmentView.as_view(), name="requestshipment"),
     path('password-change/',PasswordChangeView.as_view(),name="changepassword"),
 ]
