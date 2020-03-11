@@ -4,18 +4,39 @@ from django.contrib.auth import authenticate
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput())
-    password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class':'form-control'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class':'form-control'
+    }))
 
 
 class RegistrationForm(forms.Form):
-    partner_full_name= forms.CharField(widget=forms.TextInput())
-    partner_company= forms.CharField(widget=forms.TextInput())
-    contact = forms.CharField(widget=forms.TextInput())
-    address = forms.CharField(widget=forms.TextInput())
-    email=forms.EmailField(widget=forms.EmailInput())
-    password = forms.CharField(widget=forms.PasswordInput())
-    confirm_password = forms.CharField(widget=forms.PasswordInput())   
+    partner_full_name= forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+    }))
+    partner_company= forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+    }))
+    contact = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+    }))
+    alt_contact = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+    }))
+    address = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control mb-3',
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control mb-3',
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control mb-3',
+    }))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control mb-3',
+    }))
 
     # def clean_username(self):
     #     username = self.cleaned_data.get('username')

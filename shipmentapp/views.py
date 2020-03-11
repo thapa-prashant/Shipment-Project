@@ -89,10 +89,6 @@ class RegistrationView(FormView):
     form_class = RegistrationForm
     success_url = reverse_lazy('shipmentapp:dashboard')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['form'] = 'form'
-
     def form_valid(self, form):
         registration_api = "http://127.0.0.1:8000/api/v1/user-registration/"
         email = form.cleaned_data["email"]
@@ -100,11 +96,13 @@ class RegistrationView(FormView):
         partner_full_name = form.cleaned_data["partner_full_name"]
         partner_company = form.cleaned_data["partner_company"]
         contact = form.cleaned_data["contact"]
+        alt_contact = form.cleaned_data['alt_contact']
         address = form.cleaned_data["address"]
         data = {'email':email,
                 'password':password,
                 'partner_full_name':partner_full_name,
                 'contact':contact,
+                'alt_contact':alt_contact,
                 'address':address,
                 'partner_company':partner_company
                 }
