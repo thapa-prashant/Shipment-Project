@@ -2,15 +2,76 @@
 
 {% block content %}
 
-<div>
-    <div style="width: 30%; margin: 10vh 35% auto;">
-        <h3 style="position: center;">Update Form</h3>
+<div class="container">
 
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-             <button> Update </button>
-        </form>
+        <h3 class="text-center pt-5 " style="position: center;">Update your profile</h3>
+
+{#        <form method="POST">#}
+{#            {% csrf_token %}#}
+{#            {{form.as_p}}#}
+{#             <button> Update </button>#}
+{#        </form>#}
+
+<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded col-md-8 offset-md-2">
+<form method="post" >
+  {% csrf_token %}
+
+  <div class="form-row col-xs-12 col-md-12">
+    <div class="form-group col-md-6">
+      <label><strong>Your Full Name:</strong><small>*</small></label>
+
+        {{form.partner_full_name}}
+    </div>
+    <div class="form-group col-md-6">
+      <label ><strong>Your company</strong><small>*</small></label>
+        {{form.partner_company}}
+
+    </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-6">
+    <label><strong>Your contact no.</strong><small>*</small></label>
+
+      {{form.contact}}
+  </div>
+  <div class="form-group col-md-6">
+    <label><strong>Your alternative contact no.</strong></label>
+<!--    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">-->
+  {{form.alt_contact}}
+  </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label><strong>Address</strong><small>*</small></label>
+      {{ form.address}}
+    </div>
+    <div class="form-group col-md-6">
+      <label><strong>Website</strong></label>
+      {{form.website}}
+    </div>
+
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label><strong>Description:</strong></label>
+      {{ form.description}}
+    </div>
+
+  </div>
+
+
+  <div class="form-group">
+      <button id="button" type="submit" class="btn btn-block btn-dark btn-theme-colored btn-sm mt-20 pt-10 pb-10" data-loading-text="Please wait...">Submit Data</button>
+  </div>
+</form>
 </div>
 </div>
+
+
+
+
+
+
+
+
 {% endblock %}

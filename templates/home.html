@@ -1,21 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-
-
-
+{% block loghome %}active{% endblock %}
 {% block content %}
-<h3 style="position: center;">Welcome to Kalpa Logistics</h3>
-<div>
-    <button>Notify me!</button>
-</div>
-<div>
-    <div>
-        <h4>Articles</h4><hr>
-        {% for article in articles %}
-            <li>{{article.title}}, Featured starting: {{article.featured_starting}}, Start time: {{article.start_time}}, Now: {{now}} </li>
-        {% endfor %}
-    </div>
-</div>
+{#<h3 style="position: center;">Welcome to Kalpa Logistics</h3>#}
+{#<div>#}
+{#    <button>Notify me!</button>#}
+{#</div>#}
 {% endblock %}
 
 {% block js %}
