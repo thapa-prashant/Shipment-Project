@@ -63,28 +63,28 @@
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link {% block requestshipment %} {% endblock %} " href="{% url 'shipmentapp:requestshipment' %}">Request Shipment <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link {% if status == 'all-shipment' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=all-shipment">All Shipments</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link  {% if status == 'requested' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=requested">Requested Shipments</a>
-      </li>
-        <li class="nav-item active">
-        <a class="nav-link {% if status == 'processing' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=processing">Processing Shipments</a>
-      </li>
-        <li class="nav-item active">
-        <a class="nav-link {% if status == 'delivered' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=delivered">Successful Shipments</a>
-        </li>
+              <li class="nav-item active">
+                <a class="nav-link {% block requestshipment %} {% endblock %} " href="{% url 'shipmentapp:requestshipment' %}">Request Shipment <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link {% if status == 'all-shipment' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=all-shipment">All Shipments</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link  {% if status == 'requested' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=requested">Requested Shipments</a>
+              </li>
+                <li class="nav-item active">
+                <a class="nav-link {% if status == 'processing' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=processing">Processing Shipments</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link {% if status == 'delivered' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=delivered">Successful Shipments</a>
+              </li>
 
-        <li class="nav-item active">
-        <a class="nav-link {% if status == 'failed' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=failed">Failed Shipments</a>
-        </li>
+              <li class="nav-item active">
+                <a class="nav-link {% if status == 'failed' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=failed">Failed Shipments</a>
+              </li>
 
-        <li class="nav-item active">
-            <span class="text-bold">Signed in as:</span>
+                <li class="nav-item active">
+                    <span class="text-bold">Signed in as:</span>
                     <span class="bg-success">{{email}}</span>
                 </li>
                 <li>
@@ -98,8 +98,7 @@
 </div>
 
 
-<div class="main-content">
-
+     <div class="main-content">
         {% block content %}
 
         {% endblock %}

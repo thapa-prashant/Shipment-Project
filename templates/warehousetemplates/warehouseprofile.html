@@ -1,0 +1,19 @@
+{% extends 'warehousetemplates/warehousebase.html' %}
+{% load static %}
+
+{% block title %}
+Personal Profile Page
+{% endblock %}
+
+{% block content %}
+<div class="row mt-2">
+    <div class="col-md-4">
+        <h4>Name: {{user.name}}</h4>
+        <p>User_ID: {{user.id}}</p>
+        <p>WareHouse: {{warehouse.name}}</p>
+    </div>
+    <div class="col-md-8">
+        <p><img src="{{user.image}}" alt="User"></p>
+    </div>
+</div>
+{% endblock %}

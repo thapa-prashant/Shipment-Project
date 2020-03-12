@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body class="container-fluid bg-dark">
+    <div class="row">
+        <div class="col-md-3 offset-md-4 mt-5 p-3" style="border: 1px solid #ccc; border-radius: 5%; background-color: #97b2e4;">
+            <h4 class="text-center">Logistic Admin Login Form</h4>
+            <hr style="color: gray;">
+            <form method="POST">
+                {% csrf_token %}
+                {% if error or request.GET.err %}
+                    <span style="color: red;">{{error}}</span>
+                {% endif %}
+                <!-- {{form.as_p}} -->
+                <div style="margin-top: 20px;">
+                    <label name="Username">Username: </label>
+                    {{form.username}}
+                </div>
+                <div style="margin-top: 20px;">
+                    <label name="Password">Password: </label>
+                    {{form.password}}
+                </div>
+                <div>
+                    <p class="mt-3 text-danger"><a href="">Forgot Password</a></p>
+                </div>
+                <div class="pt-1 pb-2 text-center">
+                    <button class="btn-success">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
