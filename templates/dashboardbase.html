@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Dashboard</title>
     {% block css %}
 
@@ -53,9 +53,9 @@
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-info">
+            <nav class="navbar navbar-expand-lg navbar-light bg-info" >
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -77,11 +77,11 @@
       </li>
         <li class="nav-item active">
         <a class="nav-link {% if status == 'delivered' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=delivered">Successful Shipments</a>
-      </li>
+        </li>
 
-    <li class="nav-item active">
+        <li class="nav-item active">
         <a class="nav-link {% if status == 'failed' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=failed">Failed Shipments</a>
-      </li>
+        </li>
 
         <li class="nav-item active">
             <span class="text-bold">Signed in as:</span>
@@ -90,17 +90,23 @@
                 <li>
                     <a href="{% url 'shipmentapp:logout' %}"><button class="btn-danger">Logout</button></a>
                 </li>
-    </ul>
+        </ul>
 
-  </div>
-</nav>
-    </header>
+        </div>
+        </nav>
+        </header>
+
 
 
 
             </div>
 
-    <div class="main-content">
+
+
+
+
+
+     <div class="main-content">
         {% block content %}
 
         {% endblock %}
