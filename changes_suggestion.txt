@@ -1,0 +1,8 @@
+Changes Suggestions
+
+Date: 2020-02-12
+    - Make footer background about same width that navigation bar has.
+    - In home page, login or other options are not visible, nav bar button not working. 
+    - Updating alternative contact number not working
+    - While changing password, Error occured
+    - Update your kalpaproject code with Alish or Sujan and get updated version from him.  
