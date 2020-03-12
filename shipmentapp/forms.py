@@ -174,7 +174,7 @@ class ShipmentForm(forms.Form):
         return self.cleaned_data
 
 
-class PasswordUpateForm(forms.Form):
+class PasswordUpdateForm(forms.Form):
     old_password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class':'form-control',
         'placeholder':'enter old password'
@@ -196,12 +196,12 @@ class PasswordUpateForm(forms.Form):
         if new_password != confirm_new_password:
             raise forms.ValidationError("Passwords do not match")
         return confirm_new_password
-    
+
     def clean(self):
-        cleaned_data = super().clean()
+        cleaned_data = super(PasswordUpdateForm,self).clean()
         new_password = cleaned_data['new_password']
 
         if len(new_password) < 6:
             raise forms.ValidationError("Your password should be at least 6 Characters")
 
-        return new_password
+        return cleaned_data

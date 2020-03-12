@@ -262,15 +262,16 @@ class RequestShipmentView(PartnerRequiredMixin, FormView):
 
 class PasswordChangeView(PartnerRequiredMixin,FormView):
     template_name = 'passwordchange.html'
-    form_class = PasswordUpateForm
+    form_class = PasswordUpdateForm
     success_url = reverse_lazy('shipmentapp:dashboard')
 
     def form_valid(self, form):
         old_password = form.cleaned_data['old_password']
+        print()
         new_password = form.cleaned_data['new_password']
         data = {
             'old_password': old_password,
-            'new_password': new_password
+            'new_password': new_password,
         }
         response = requests.put("http://127.0.0.1:8000/api/v1/user/changepassword/", data=data,
                                 headers=self.headers)
