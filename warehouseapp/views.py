@@ -22,7 +22,7 @@ class LogisticAdminRequiredMixin(object):
                 # print(' dispath try if ------------')
                 token = "Token " + request.session.get('token')
                 self.headers = {'Authorization': token}
-                resp = requests.get('http://127.0.0.1:8000/api/ladmin/logisticadmin-profile/', 
+                resp = requests.get('http://127.0.0.1:8000/api/v1/ladmin/logisticadmin-profile/', 
                     headers = self.headers)
                 # print(resp.json(), ' dispath try if resp ------------')
                 if 'logisticadmin' in resp.json():
@@ -50,14 +50,12 @@ class LogisticAdminRequiredMixin(object):
         # context['name'] = self.name
         # warehouse = self.warehouse
         pk = self.warehouse
-        warehouseapi_url = "http://127.0.0.1:8000/api/ladmin/warehouse/" + str(pk) + "/detail/"
+        warehouseapi_url = "http://127.0.0.1:8000/api/v1/ladmin/warehouse/" + str(pk) + "/detail/"
         response = requests.get(warehouseapi_url, headers = self.headers)
         warehouse = response.json()
         user = warehouse['logisticadmin_set']
         user_dict = user[0]
         user_name = user_dict['id']
-        print(type(user_dict))
-        print(type(user))
         # print(warehouse)
         
         context['warehouse'] = warehouse
@@ -70,9 +68,9 @@ class WareHouseHomeView(LogisticAdminRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # warehouseapi_url = "http://127.0.0.1:8000/api/ladmin/warehouse/information/"
+        # warehouseapi_url = "http://127.0.0.1:8000/api/v1/ladmin/warehouse/information/"
         # pk = self.warehouse
-        # warehouseapi_url = "http://127.0.0.1:8000/api/ladmin/warehouse/" + str(pk) + "/detail/"
+        # warehouseapi_url = "http://127.0.0.1:8000/api/v1/ladmin/warehouse/" + str(pk) + "/detail/"
         # response = requests.get(warehouseapi_url, headers = self.headers)
         # warehouse = response.json()
         # print(warehouse)
@@ -97,7 +95,7 @@ class WareHouseAdminLoginView(FormView):
         try:
             resp = requests.post(url = loginapi_url, data = data)
             resp_data = resp.json()
-            print(resp_data, '\n Form valid try case')
+            # print(resp_data, '\n Form valid try case')
             if resp_data.get('token'):
                 self.request.session['token'] = resp_data.get('token')
             else:
