@@ -2,21 +2,216 @@
 
 {% block content %}
 
+
+
+{#<div class="container">#}
+{##}
+{#        <h3 class="text-center pt-5 " style="position: center;">Update your profile</h3>#}
+{##}
+{##}
+{#<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded col-md-8 offset-md-2">#}
+{#<form method="post" >#}
+{#  {% csrf_token %}#}
+{##}
+{#  <div class="form-row ">#}
+{#    <div class="form-group col-md-6">#}
+{#      <label><strong>Your Full Name:</strong><small>*</small></label>#}
+{##}
+{#        {{form.partner_full_name}}#}
+{#    </div>#}
+{#    <div class="form-group col-md-6">#}
+{#      <label ><strong>Your company</strong><small>*</small></label>#}
+{#        {{form.partner_company}}#}
+{##}
+{#    </div>#}
+{#  </div>#}
+{#  <div class="form-row">#}
+{#  <div class="form-group col-md-6">#}
+{#    <label><strong>Your contact no.</strong><small>*</small></label>#}
+{##}
+{#      {{form.contact}}#}
+{#  </div>#}
+{#  <div class="form-group col-md-6">#}
+{#    <label><strong>Your alternative contact no.</strong></label>#}
+{#<!--    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">-->#}
+{#  {{form.alt_contact}}#}
+{#  </div>#}
+{#  </div>#}
+{#  <div class="form-row">#}
+{#    <div class="form-group col-md-6">#}
+{#      <label><strong>Address</strong><small>*</small></label>#}
+{#      {{ form.address}}#}
+{#    </div>#}
+{#    <div class="form-group col-md-6">#}
+{#      <label><strong>Website</strong></label>#}
+{#      {{form.website}}#}
+{#    </div>#}
+{##}
+{#  </div>#}
+{#  <div class="form-row">#}
+{#    <div class="form-group col-md-12">#}
+{#      <label><strong>Description:</strong></label>#}
+{#      {{ form.description}}#}
+{#    </div>#}
+{##}
+{#  </div>#}
+{##}
+{##}
+{#  <div class="form-group text-center">#}
+{#      <button id="button" type="submit" class="btn  btn-dark btn-group-lg mt-20 pt-10 pb-10" data-loading-text="Please wait...">Submit Data</button>#}
+{#  </div>#}
+{#</form>#}
+{#</div>#}
+{#</div>#}
+
+
+
+
+
+
+{#    <section class="gry-bg py-4">#}
+{#    <div class="profile">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-xl-10 offset-xl-1">#}
+{#                    <div class="card shadow-lg register-box bg-info" style="border-color: #eb8842">#}
+{#                        <div class="text-center px-35 pt-5" style="color: #dddddd">#}
+{#                            <h3 class="heading heading-4 strong-500 text-white">#}
+{#                                Update Your Profile#}
+{#                            </h3>#}
+{#                        </div>#}
+{#                        {% if error or request.GET.err %}#}
+{#                            <li style="color: red;">{{ error }}</li>#}
+{#                        {% endif %}#}
+{#                        <div class="px-1 py-1 py-lg-1">#}
+{#                            <div class="row align-items-center">#}
+{#                                <div class="shadow-lg p-3 mb-5 mt-5 bg-dark rounded col-md-8 offset-md-2">#}
+{#                                    <form class="form-default" role="form" method="POST">#}
+{#                                    	{% csrf_token %}#}
+{#                                         <div class="form-row ">#}
+{#                                            <div class="form-group col-md-6">#}
+{#                                              <label class="form-control-label">Your Full Name<small>*</small></label>#}
+{##}
+{#                                                {{form.partner_full_name}}#}
+{#                                            </div>#}
+{#                                            <div class="form-group col-md-6">#}
+{#                                              <label class="form-control-label">Your company<small>*</small></label>#}
+{#                                                {{form.partner_company}}#}
+{##}
+{#                                            </div>#}
+{#                                          </div>#}
+{#                                          <div class="form-row">#}
+{#                                          <div class="form-group col-md-6">#}
+{#                                            <label class="form-control-label">Your contact no.<small>*</small></label>#}
+{##}
+{#                                              {{form.contact}}#}
+{#                                          </div>#}
+{#                                          <div class="form-group col-md-6">#}
+{#                                            <label class="form-control-label">Alternative contact no.</label>#}
+{#                                        <!--    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">-->#}
+{#                                          {{form.alt_contact}}#}
+{#                                          </div>#}
+{#                                          </div>#}
+{#                                          <div class="form-row">#}
+{#                                            <div class="form-group col-md-6">#}
+{#                                              <label class="form-control-label">Address<small>*</small></label>#}
+{#                                              {{ form.address}}#}
+{#                                            </div>#}
+{#                                            <div class="form-group col-md-6">#}
+{#                                              <label class="form-control-label">Website</label>#}
+{#                                              {{form.website}}#}
+{#                                            </div>#}
+{##}
+{#                                          </div>#}
+{#                                          <div class="form-row">#}
+{#                                            <div class="form-group col-md-12">#}
+{#                                              <label class="form-control-label">Description:</label>#}
+{#                                              {{ form.description}}#}
+{#                                            </div>#}
+{##}
+{#                                        <div class="row text-center">#}
+{##}
+{#                                        </div>#}
+{#                                        </div>#}
+{##}
+{#                                         <div class="form-group text-center">#}
+{#                                              <button id="button" type="submit" class="btn btn-group-lg mt-20 pt-10 pb-10" data-loading-text="Please wait...">Update</button>#}
+{#                                          </div>#}
+{#                                    </form>#}
+{#                                </div>#}
+{##}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#    <style>#}
+{#    .register-box {#}
+{##}
+{#    margin-top: 75px;#}
+{#    height: auto;#}
+{#    background: #1A2226;#}
+{#    text-align: center;#}
+{#    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);#}
+{#}#}
+{#    .form-group{#}
+{#        color: #dddddd;#}
+{#    }#}
+{##}
+{#         /* Chrome, Safari, Edge, Opera */#}
+{#                input::-webkit-outer-spin-button,#}
+{#                input::-webkit-inner-spin-button {#}
+{#                  -webkit-appearance: none;#}
+{#                  margin: 0;#}
+{#                }#}
+{#                /* Firefox */#}
+{#                input[type=number] {#}
+{#                  -moz-appearance: textfield;#}
+{#                }#}
+{#    </style>#}
+
+
+
+
+
+
+
+
+
+
+      <style>
+
+
+                /* Chrome, Safari, Edge, Opera */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+                /* Firefox */
+                input[type=number] {
+                  -moz-appearance: textfield;
+                }
+    </style>
+
+
+    <div class="page-wrapper">
 <div class="container">
 
-        <h3 class="text-center pt-5 " style="position: center;">Update your profile</h3>
 
-{#        <form method="POST">#}
-{#            {% csrf_token %}#}
-{#            {{form.as_p}}#}
-{#             <button> Update </button>#}
-{#        </form>#}
-
-<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded col-md-8 offset-md-2">
+<div class="shadow-lg p-3 mb-5 mt-5 bg-info rounded col-md-8 offset-md-2  ">
+<div class="panel panel-default card-view">
 <form method="post" >
   {% csrf_token %}
-
-  <div class="form-row col-xs-12 col-md-12">
+    <h3 class="heading heading-4 strong-500 text-center mb-5 ">
+     Update Profile
+    </h3>
+     <div class="form-row ">
     <div class="form-group col-md-6">
       <label><strong>Your Full Name:</strong><small>*</small></label>
 
@@ -60,17 +255,18 @@
   </div>
 
 
-  <div class="form-group">
-      <button id="button" type="submit" class="btn btn-block btn-dark btn-theme-colored btn-sm mt-20 pt-10 pb-10" data-loading-text="Please wait...">Submit Data</button>
+  <div class="form-group text-center">
+      <button id="button" type="submit" class="btn  btn-dark btn-group-lg mt-20 pt-10 pb-10" data-loading-text="Please wait...">Update</button>
   </div>
+
 </form>
+
+
+    </div>
+
 </div>
 </div>
-
-
-
-
-
+    </div>
 
 
 

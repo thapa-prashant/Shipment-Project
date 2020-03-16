@@ -10,16 +10,19 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Dashboard</title>
     {% block css %}
 
     {% endblock %}
     <style>
+
+
         body{
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background: #F3F3F3;
         }
         {#.main-content {#}
             margin: 10px 10%;
@@ -50,55 +53,86 @@
             background-color: rgb(33, 214, 142);
             color: white;
         }
+        footer{
+            margin: 20px;
+            padding: 5px;
+            box-sizing: border-box;
+            background: #17A2B8;
+        }
+
+
+
     </style>
 </head>
 <body>
+
 <div class="container-fluid">
-    <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-info" >
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand  " href="{% url 'shipmentapp:dashboard' %}"><button class="btn-success">Dashboard</button></a>
+       <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-info" >
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand  " href="{% url 'shipmentapp:dashboard' %}"><button class=" btn btn-success">Dashboard</button></a>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-              <li class="nav-item active">
-                <a class="nav-link {% block requestshipment %} {% endblock %} " href="{% url 'shipmentapp:requestshipment' %}">Request Shipment <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link {% if status == 'all-shipment' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=all-shipment">All Shipments</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link  {% if status == 'requested' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=requested">Requested Shipments</a>
-              </li>
-                <li class="nav-item active">
-                <a class="nav-link {% if status == 'processing' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=processing">Processing Shipments</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link {% if status == 'delivered' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=delivered">Successful Shipments</a>
-              </li>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 
-              <li class="nav-item active">
-                <a class="nav-link {% if status == 'failed' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=failed">Failed Shipments</a>
-              </li>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                      <li class="nav-item active">
+                        <a class="nav-link  {% block requestshipment %} {% endblock %} " href="{% url 'shipmentapp:requestshipment' %}">Request Shipment <span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item active">
+                        <a class="nav-link {% if status == 'all-shipment' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=all-shipment">All Shipments</a>
+                      </li>
+                      <li class="nav-item active">
+                        <a class="nav-link  {% if status == 'requested' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=requested">Requested Shipments</a>
+                      </li>
+                        <li class="nav-item active">
+                        <a class="nav-link {% if status == 'processing' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=processing">Processing Shipments</a>
+                      </li>
+                      <li class="nav-item active">
+                        <a class="nav-link {% if status == 'delivered' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=delivered">Successful Shipments</a>
+                      </li>
 
-                <li class="nav-item active">
-                    <span class="text-bold">Signed in as:</span>
-                    <span class="bg-success">{{email}}</span>
-                </li>
+
+                      <li class="nav-item active">
+                        <a class="nav-link {% if status == 'failed' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=failed">Failed Shipments</a>
+                      </li>
+
+
                 <li>
-                    <a href="{% url 'shipmentapp:logout' %}"><button class="btn-danger">Logout</button></a>
-                </li>
-        </ul>
 
+            <div class=""></div>
+             <ul class="navbar-nav ">
+
+        <li class="dropdown">
+        <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="/media/user2.png" width="40" height="40" class="rounded-circle">
+        </a>
+        <div style="background: #21D68E"  class="dropdown-menu dropdown-menu-right col-md-4" aria-labelledby="navbarDropdownMenuLink">
+            <h6 class="font-weight-bold dropdown-item bg-info ">User:
+                <br> {{ name }}</h6>
+
+          <a class="dropdown-item" href="{% url 'shipmentapp:userupdate' %}">Edit Profile</a>
+         <a class="dropdown-item" href="{% url 'shipmentapp:changepassword' %}">Change Password</a>
+            <a class="dropdown-item r text-white text-center " href="{% url 'shipmentapp:logout' %}"> <button class=" btn btn-sm btn-danger">Log Out</button></a>
         </div>
-        </nav>
-        </header>
+      </li>
+       </ul>
 
-        </div>
+     </li>
 
+
+    </ul>
+
+
+
+    </div>
+    </nav>
+       </header>
+
+     </div>
      <div class="main-content">
+
         {% block content %}
 
         {% endblock %}
@@ -111,15 +145,12 @@
 <script src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js "></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js "></script>
 
-
-
-
     {% block js %}
 
     {% endblock %}
     
     <footer>
-        <p class="text-center mt-5">Developed by: <a href="">Sarobar Technology</a></p>
+        <p class="text-center mt-5  ">Developed by: <a style="color: black" href="">Sarobar Technology</a></p>
     </footer>
 </body>
 </html>
