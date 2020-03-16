@@ -1,0 +1,133 @@
+{% extends 'warehousetemplates/warehousebase.html' %}
+{% load static %}
+
+{% block title %}
+Warehouse - New Shipment Location List Page
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1>Warehouse New Shipment-Location List Page</h1>
+        <p>Admin: {{user}}</p>
+        <!-- <p>User: {{user.id}}</p> -->
+        <p>WareHouse: {{warehouse}}</p>
+
+        <h5>Shipment Locations: </h5>
+       <table class="table">
+           <thead>
+               <tr>
+                   <th>ID</th>
+                   <th>Shipment Code</th>
+                   <th>Origin WareHouse</th>
+                   <th>Dropoff Address</th>
+                   <th>Staff</th>
+                   <th>Status</th>
+                   <!-- <th>Amounts</th> -->
+                   <th>Actions</th>
+               </tr>
+           </thead>
+           <tbody>
+               {% for shipment in shipmentlocation_list %}
+               <tr>
+                   <td>{{shipment.id}}</td>
+                   <td>
+                       {{shipment.shipment.shipment_code}}
+                   </td>
+                   <td>
+                       {{shipment.warehouse}}
+                    </td>
+                   <td>
+                        {{shipment.shipment.receiver_name}}({{shipment.shipment.receiver_contact}})<br>
+                        {{shipment.shipment.dropoff_city}}<br>
+                        {{shipment.shipment.dropoff_street_address}}
+                    </td>
+                   <td>{{shipment.staff}}</td>
+                   <td>
+                        {{shipment.status}}
+                    </td>
+                    <!-- <td> -->
+                        <!-- {{shipment.shipping_charge}} -->
+                    <!-- </td> -->
+                   <td>
+                        <!-- <a data-href="" data-toogle="model" class="btn btn-success"><i class="fa fa-edit"></i></a> -->
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#shipment_ready_modal_{{shipment.shipment.id}}">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        <a data-href="" data-toogle="model" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    </td>
+                    <!-- Modal -->
+                    <div class="modal fade" id="shipment_ready_modal_{{shipment.shipment.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Accept Shipment Request??</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="row">
+                                  <div class="col-sm-12">
+                                      <div class="row">
+                                        <p>
+                                            <div class="col-md-4">
+                                                <strong>Shipment Code</strong>
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{shipment.shipment.shipment_code}}
+                                            </div>
+                                        </p>
+                                      </div>
+                                      <div class="row">
+                                        <p>
+                                            <div class="col-md-4">
+                                                <strong>From</strong>
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{shipment.warehouse}}
+                                            </div>
+                                        </p>
+                                      </div>
+                                      <div class="row">
+                                        <p>
+                                            <div class="col-md-4">
+                                                <strong>Dropoff Address</strong>
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{shipment.shipment.receiver_name}}({{shipment.shipment.receiver_contact}})<br>
+                                                &nbsp;&nbsp;{{shipment.shipment.dropoff_city}}<br>
+                                                &nbsp;&nbsp;{{shipment.shipment.dropoff_street_address}}
+                                            </div>
+                                        </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Never Mind</button>
+                            <button type="button" class="btn btn-success">Accept Shipment</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </tr>
+                {% endfor %}
+           </tbody>
+        </table>
+    </div>
+</div>
+<!-- Button trigger modal -->
+  
+
+{% endblock %}
+{% block js %}
+<script>
+    $(document).ready(fucntion() {
+        $('#model').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+    })
+</script>
+{% endblock %}

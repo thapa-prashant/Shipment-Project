@@ -6,21 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block css %}
     {% endblock %}
 </head>
-<body class="container-fluid">
+<body class="container-fluid" style="background-color: silver;">
     <div class="row m-2">
-        <div class="col-md-2">
-            <h4><a href=" {% url 'warehouseapp:warehousehome' %} ">Home</a></h4>
-            <h4><a href=" {% url 'warehouseapp:warehouseadminprofile' %} ">Profile</a></h4>
-            <h4><a href=" {% url 'warehouseapp:warehousehome' %} ">Staffs</a></h4>
-            <h4><a href=" {% url 'warehouseapp:warehousehome' %} ">Shipments</a></h4>
-            <h4><a href=" {% url 'warehouseapp:warehousehome' %} ">Activities</a></h4>
-            Logged in as: (<a href=" {% url 'warehouseapp:warehouseadminprofile' %} ">{{user.name}}</a>)
-            <a href=" {% url 'warehouseapp:warehouseadminlogout' %} ">Logout</a>
+        <div class="col-md-3">
+            <h4>
+                <a href=" {% url 'warehouseapp:warehousehome' %} " style="color: red;">
+                    {{warehouse}}
+                </a>
+            </h4>
+            <h5><a href=" {% url 'warehouseapp:warehousehome' %} ">Overview</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminprofile' %} ">Profile</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminstafflist' %} ">Staffs</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlocationlist' %} ">Shipment Notifications</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminnewshipmentlocationlist' %} ">New Shipments</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlist' %} ">Shipments</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehousehome' %} ">Activities</a></h5>
+            Logged in as: (<a href=" {% url 'warehouseapp:warehouseadminprofile' %} ">{{user}}</a>)
+            <a href=" {% url 'warehouseapp:warehouseadminlogout' %} " class="text-danger">Logout</a>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
         {% block content %}
         {% endblock %}
         </div>
@@ -29,6 +37,8 @@
         <span><strong>@</strong> copyright 2020, <strong>SarobarTech</strong></span>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     {% block js %}
     {% endblock %}
 </body>

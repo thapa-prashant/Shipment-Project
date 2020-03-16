@@ -1,0 +1,61 @@
+{% extends 'warehousetemplates/warehousebase.html' %}
+{% load static %}
+
+{% block title %}
+Warehouse - Shipment List Page
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Warehouse Shipments List Page</h1>
+        <p>Admin: {{user}}</p>
+        <!-- <p>User: {{user.id}}</p> -->
+        <p>WareHouse: {{warehouse}}</p>
+
+        <h5>Shipments: </h5>
+       <table class="table table-responsive">
+           <thead>
+               <tr>
+                   <th>SN</th>
+                   <th>Shipment Code</th>
+                   <th>Shipment Status</th>
+                   <th>Reference Order</th>
+                   <th>PickUp Information</th>
+                   <th>Dropoff Address</th>
+                   <!-- <th>Amounts</th> -->
+                   <th>Actions</th>
+               </tr>
+           </thead>
+           <tbody>
+               {% for shipment in shipment_list %}
+               <tr>
+                   <td>{{forloop.counter}}</td>
+                   <td>{{shipment.shipment_code}}</td>
+                   <td>{{shipment.shipment_status}}</td>
+                   <td>{{shipment.reference_order}}</td>
+                   <td>
+                        {{shipment.sender_name}}({{shipment.contact}})<br>
+                        {{shipment.pickup_city}}<br>
+                        {{shipment.pickup_street_address}}
+                    </td>
+                   <td>
+                        {{shipment.receiver_name}}({{shipment.receiver_contact}})<br>
+                        {{shipment.dropoff_city}}<br>
+                        {{shipment.dropoff_street_address}}
+                    </td>
+                    <!-- <td> -->
+                        <!-- {{shipment.shipping_charge}} -->
+                    <!-- </td> -->
+                   <td>
+                        <a href="" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+           </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
