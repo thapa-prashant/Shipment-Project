@@ -22,8 +22,10 @@ class RegistrationForm(forms.Form):
     contact = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
     }))
-    alt_contact = forms.CharField(required=False,widget=forms.TextInput(attrs={
+
+    alt_contact = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         'class': 'form-control mb-3',
+        'placeholder': 'Your alternative contact',
     }))
     address = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
@@ -56,23 +58,23 @@ class ProfileEditForm(forms.Form):
         'class': 'form-control mb-3',
 
     }))
-    contact = forms.CharField(widget= forms.TextInput(attrs={
+    contact = forms.IntegerField(widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-
+        'placeholder': 'Enter your contact',
     }))
     address = forms.CharField(widget= forms.TextInput(attrs={
         'class': 'form-control mb-3',
 
     }))
-    alt_contact = forms.CharField(required=False,widget= forms.TextInput(attrs={
-        'class': 'form-control ',
-
+    alt_contact = forms.IntegerField(required=False,widget= forms.NumberInput(attrs={
+        'class': 'form-control mb-3',
+        'placeholder': 'Your alternative contact',
     }))
     website = forms.URLField(required=False,widget= forms.URLInput(attrs={
         'class': 'form-control mb-3',
 
     }))
-    description = forms.CharField(widget= forms.Textarea(attrs={
+    description = forms.CharField(required=False,widget= forms.Textarea(attrs={
         'class': 'form-control mb-3',
         'placeholder':"Write about yourself!",
 
@@ -82,7 +84,7 @@ class ProfileEditForm(forms.Form):
         cleaned_data = super().clean()
         contact = cleaned_data['contact']
         # receiver_alt_contact = cleaned_data['receiver_alt_contact']
-        if len(str(contact)) < 10:
+        if len(str(contact)) < 10 or len(str(contact)) > 10 :
             raise forms.ValidationError("Your number should be at least 10 Characters")
 
         return self.cleaned_data
@@ -131,23 +133,23 @@ class ShipmentForm(forms.Form):
         "class": "form-control"}))
     parcel_weight = forms.DecimalField(widget= forms.NumberInput(attrs={
         'class': 'form-control ',
-        'placeholder': 'Parcel weight',
+        'placeholder': '(in gram)',
     }))
     parcel_length = forms.DecimalField(widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Parcel length',
+        'placeholder': '(in cm)',
     }))
     parcel_width = forms.DecimalField(widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Parcel width',
+        'placeholder': '(in cm)',
     }))
     parcel_height = forms.DecimalField(widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Alt Parcel height',
+        'placeholder': '(in cm)',
     }))
     parcel_total = forms.DecimalField(widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
-        'placeholder': 'Parcel total',
+        'placeholder': 'total amount',
     }))
     customer_payment_status = forms.BooleanField(required=False)
     mode_of_payment = forms.ChoiceField(choices=MODE_OF_PAYMENT,widget=forms.Select(attrs={

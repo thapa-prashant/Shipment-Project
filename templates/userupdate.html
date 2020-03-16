@@ -2,21 +2,35 @@
 
 {% block content %}
 
+
+      <style>
+
+
+                /* Chrome, Safari, Edge, Opera */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+                /* Firefox */
+                input[type=number] {
+                  -moz-appearance: textfield;
+                }
+    </style>
+
+
+    <div class="page-wrapper">
 <div class="container">
 
-        <h3 class="text-center pt-5 " style="position: center;">Update your profile</h3>
 
-{#        <form method="POST">#}
-{#            {% csrf_token %}#}
-{#            {{form.as_p}}#}
-{#             <button> Update </button>#}
-{#        </form>#}
-
-<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded col-md-8 offset-md-2">
+<div class="shadow-lg p-3 mb-5 mt-5 bg-dark text-white rounded col-md-8 offset-md-2  ">
+<div class="panel panel-default card-view">
 <form method="post" >
   {% csrf_token %}
-
-  <div class="form-row col-xs-12 col-md-12">
+    <h3 class="heading heading-4 strong-500 text-center mb-5 ">
+     Update Profile
+    </h3>
+     <div class="form-row ">
     <div class="form-group col-md-6">
       <label><strong>Your Full Name:</strong><small>*</small></label>
 
@@ -60,17 +74,18 @@
   </div>
 
 
-  <div class="form-group">
-      <button id="button" type="submit" class="btn btn-block btn-dark btn-theme-colored btn-sm mt-20 pt-10 pb-10" data-loading-text="Please wait...">Submit Data</button>
+  <div class="form-group text-center">
+      <button id="button" type="submit" class="btn btn-outline-light  btn-group-lg mt-20 pt-10 pb-10" data-loading-text="Please wait...">Update</button>
   </div>
+
 </form>
+
+
+    </div>
+
 </div>
 </div>
-
-
-
-
-
+    </div>
 
 
 

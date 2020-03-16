@@ -10,7 +10,11 @@
 
     {% block meta %}
     {% endblock %}
-    <title>Kalpa Logistics</title>
+    <title>
+        {% block registertitle %} {% endblock %}
+        {% block logintitle %} {% endblock %}
+        {% block hometitle %} {% endblock %}
+    </title>
 </head>
 <body>
     <div class="container">

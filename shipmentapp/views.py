@@ -108,7 +108,7 @@ class RegistrationView(FormView):
                 }
 
         resp = requests.post(registration_api,data=data)
-        print(resp.json())
+        # print(resp.json())
         if resp.json().get('fail'):
             return render(self.request,self.template_name,{'form':form,'error':"Email you've entered already exists."})
         return super().form_valid(form)
@@ -128,6 +128,7 @@ class PartnerRequiredMixin(object):
                     self.company = resp.json()['partner']['partner_company']
                     self.address = resp.json()['partner']['address']
                     self.contact = resp.json()['partner']['contact']
+                    self.partner_full_name = resp.json()['partner']['partner_full_name']
                 else:
                     return redirect('/login/?err=err')
             else:
@@ -140,6 +141,7 @@ class PartnerRequiredMixin(object):
         context = super().get_context_data(**kwargs)
         context['email'] = self.email
         context['id'] = self.id
+        context['name'] = self.partner_full_name
         return context
 
 
@@ -213,6 +215,7 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         context['shipment_type'] = status.upper()
         context['status'] = status
         context['shipment_count'] = len(shipments.json()['results'])
+        print(shipments.json()['next'])
         if shipments.json()['next']:
             context['next'] = shipments.json()['next']
         if shipments.json()['previous']:

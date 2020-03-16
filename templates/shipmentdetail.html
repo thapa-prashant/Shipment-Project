@@ -2,8 +2,10 @@
 {% load static %}
 {% block css %}
 <style>
-
-
+    .activity_set{
+        background: #1A2226;
+        border: 2px solid black;
+    }
 </style>
 
 {% endblock %}
@@ -89,30 +91,25 @@
 </div>
     {% if activity_set %}
 <div class="section">
-<div class="container">
-    <div class="list-group mt-4  ">
-    <h4 class="text-center">Shipment Activities</h4>
-    <table class="table">
-  <tbody>
-    {% for activity in activity_set %}
-        <tr>
-          <th scope="row">{{ forloop.counter }}</th>
-          <td>{{ activity.activity }}</td>
-            <td>{{ activity.created_at }}</td>
-        </tr>
-  {% endfor %}
-  </tbody>
-</table>
-{#      <h5 class="list-group-item ">#}
-{#        Shipment Activities#}
-{#      </h5>#}
-{##}
-{#        {% for activity in activity_set %}#}
-{#    <li class="list-group-item">{{ forloop.counter }}. {{ activity.activity }} {{ activity.created_at|date }}</li>#}
-{#    {% endfor %}#}
+<div class="container mt-4 ">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table">
+         <h4 class="text-center">Shipment Activities</h4>
+          <tbody>
+            {% for activity in activity_set %}
+                <tr class="{% if forloop.counter|divisibleby:2 %}table-warning{% endif %}">
+                  <th>{{ forloop.counter }}</th>
+                  <th>{{ activity.activity }}</th>
+                    <th>{{ activity.created_at }}</th>
+                </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
-
-
+  </div>
 </div>
 </div>
     {% endif %}
