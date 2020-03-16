@@ -1,5 +1,6 @@
 {% extends 'dashboardbase.html' %}
 {% block requestshipment %}active{% endblock %}
+{% block requestshipmenttitle %}Request Shipment{% endblock %}
 
 {% block content %}
     <style>
@@ -18,12 +19,12 @@
     </style>
 
 
-    <div class="card bg-secondary">
+{#    <div class="card bg-secondary">#}
     <div class="card-body ">
 <div class="container">
 
 
-<div class="shadow-lg p-3 mb-5 mt-5 bg-info rounded col-md-8 offset-md-2  ">
+<div class="shadow-lg p-3 mb-5 mt-5rounded col-md-8 bg-dark text-white offset-md-2" >
 <div class="panel panel-default card-view">
 <form method="post" >
   {% csrf_token %}
@@ -114,17 +115,16 @@
                   </div>
 
                     <div class="form-group text-center">
-                        <button id="button" type="submit" class="btn btn-group-lg mt-20 pt-10 pb-10" data-loading-text="Please wait...">Request</button>
-                     </div>
-</form>
+                        <button id="button" type="submit" class="btn btn-outline-light btn-group-lg mt-20 pt-10 pb-10" data-loading-text="Please wait...">Request</button>
+                    </div>
+        </form>
 
 
 </div>
 
 </div>
 </div>
-</div>
-    </div>
+{#</div>#}</div>
 
 
 

@@ -211,12 +211,14 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['email'] = self.email
         shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?status=" + status + "&page=" + page_num
+        # print(shipmentlist_api)
         shipments = requests.get(shipmentlist_api, headers=self.headers)
         # print(shipments.json()['results'])
         context['shipments'] = shipments.json()['results']
         context['shipment_type'] = status.upper()
         context['status'] = status
         context['shipment_count'] = len(shipments.json()['results'])
+        print(shipments.json()['next'])
         if shipments.json()['next']:
             context['next'] = shipments.json()['next']
         if shipments.json()['previous']:

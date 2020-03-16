@@ -27,7 +27,11 @@
   }
 </style>
 
+
+
 {% endblock %}
+
+
 {% block content %}
 
 <div class="container">
@@ -38,7 +42,7 @@
 
 <table id="example" class="table display nowrap" style="">
   <thead>
-      <tr style="" class="bg-info">
+      <tr style="" class="bg-dark text-white" >
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
@@ -57,7 +61,7 @@
         {% endfor %}
   </tbody>
   <tfoot>
-      <tr>
+      <tr style="" class="bg-dark text-white" >
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
@@ -65,33 +69,33 @@
       </tr>
   </tfoot>
 </table>
-    </div>
-
-
-
-
+</div>
 
 
 
 {% block js %}
-<script type="text/javascript">
+{#<script type="text/javascript">#}
+{##}
+{##}
+{#$(document).ready(function() {#}
+{#    var table = $('#example').DataTable( {#}
+{#        rowReorder: {#}
+{#            selector: 'td:nth-child(2)'#}
+{#        },#}
+{#        responsive: true#}
+{#    } );#}
+{#} );#}
+{##}
+{##}
+{##}
+{##}
+{#</script>#}
 
-
-$(document).ready(function() {
-    var table = $('#example').DataTable( {
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
-    } );
-} );
-
-
-
-
-</script>
-
-
+{#    <a href="{{ next }}"> <button>next</button></a>#}
+{#    <a href="{{ previous }}"> <button>previous</button></a>#}
+{##}
+{#    {{ next }}#}
+{#    {{ previous }}#}
 
 
 
