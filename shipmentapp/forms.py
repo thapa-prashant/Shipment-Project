@@ -22,7 +22,7 @@ class RegistrationForm(forms.Form):
     contact = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
     }))
-    alt_contact = forms.CharField(widget=forms.TextInput(attrs={
+    alt_contact = forms.CharField(required=False,widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
     }))
     address = forms.CharField(widget=forms.TextInput(attrs={
@@ -37,13 +37,6 @@ class RegistrationForm(forms.Form):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control mb-3',
     }))
-
-    # def clean_username(self):
-    #     username = self.cleaned_data.get('username')
-    #     User =
-    #     if User.objects.filter(username=username).exists():
-    #         raise forms.ValidationError("Username already exists")
-    #     return username
     
     def clean_confirm_password(self):
         cleaned_data = super().clean()
@@ -52,6 +45,7 @@ class RegistrationForm(forms.Form):
         if password != confirm_password:
             raise forms.ValidationError("Passwords do not match")
         return confirm_password
+
 
 class ProfileEditForm(forms.Form):
     partner_full_name = forms.CharField(widget= forms.TextInput(attrs={

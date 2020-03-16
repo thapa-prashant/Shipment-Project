@@ -14,9 +14,7 @@
                                 CREATE AN ACCOUNT
                             </h3>
                         </div>
-                        {% if error or request.GET.err %}
-                            <li style="color: red;">{{ error }}</li>
-                        {% endif %}
+
                         <div class="px-5 py-3 py-lg-5">
                             <div class="row align-items-center">
                                 <div class="col-12 col-lg-12">
@@ -38,7 +36,9 @@
                                                 <div class="form-group">
                                                     <label>Email</label>
                                                     <div class="input-group input-group--style-1">
+
                                                     {{form.email}}
+
                                                         <span class="input-group-addon">
                                                             <i class="text-md la la-envelope"></i>
                                                         </span>
@@ -111,33 +111,31 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="g-recaptcha" data-sitekey="">
-                                                    </div>
-                                                </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <h6 class="text-danger">{{ form.confirm_password.errors }}</h6>
+                                                {% if error %}
+                                                    <h6 class="text-danger">{{ error }}</h6>
+                                                {% endif %}
                                             </div>
                                         </div>
 
-                                        <div class="row align-items-center">
-                                            <div class="col-12 text-right  mt-3">
-                                                <button type="submit" class="btn btn-styled btn-base-1 w-100 btn-md">Create Account</button>
-                                            </div>
+                                        <div class="form-group">
+                                                <button type="submit" class="btn btn-styled btn-base-1 " style="">Create Account</button>
+
                                         </div>
                                     </form>
+                                    <div class="text-center px-35 pb-3">
+                                        <p class="text-md" style="color: aliceblue">
+                                            Already have an account?&nbsp;<a href="{% url 'shipmentapp:login' %}" class="strong-600">Log In</a>
+                                        </p>
+                                    </div>
                                 </div>
                                 <!-- <div class="col-lg-1 text-center align-self-stretch">
                                     <div class="border-right h-100 mx-auto" style="width:1px;"></div>
                                 </div> -->
                             </div>
                         </div>
-                        <div class="text-center px-35 pb-3">
-                            <p class="text-md" style="color: aliceblue">
-                                Already have an account?&nbsp;<a href="{% url 'shipmentapp:login' %}" class="strong-600">Log In</a>
-                            </p>
-                        </div>
+
                     </div>
                 </div>
             </div>

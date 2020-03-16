@@ -15,4 +15,5 @@ urlpatterns = [
     path('shipment-detail/<int:pk>/',ShipmentDetailView.as_view(),name="shipmentdetail"),
     path('request-shipment/', RequestShipmentView.as_view(), name="requestshipment"),
     path('password-change/',PasswordChangeView.as_view(),name="changepassword"),
+    path('barcode/',Demoview.as_view(),name="bar")
 ]

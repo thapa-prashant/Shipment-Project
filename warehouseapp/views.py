@@ -11,8 +11,10 @@ from django.http import JsonResponse
 from django.conf import settings
 import json
 
+
 class WareHouseMixin(object):
     pass
+
 
 class LogisticAdminRequiredMixin(object):
     def dispatch(self, request, *args, **kwargs):
@@ -80,7 +82,6 @@ class WareHouseHomeView(LogisticAdminRequiredMixin, TemplateView):
         return context
 
 
-
 class WareHouseAdminLoginView(FormView):
     template_name = "warehousetemplates/warehouseadminlogin.html"
     form_class = WareHouseAdminLoginForm
@@ -108,7 +109,6 @@ class WareHouseAdminLoginView(FormView):
         except:
             return redirect('/')
         return super().form_valid(form)
-
 
 
 class WareHouseAdminLogoutView(LogisticAdminRequiredMixin, View):

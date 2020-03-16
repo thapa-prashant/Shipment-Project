@@ -1,141 +1,127 @@
 {% extends 'dashboardbase.html' %}
-
+{% load static %}
 {% block css %}
 <style>
 
-#shipments {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
 
-  #shipments td, #shipments th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-  #shipments tr:nth-child(even){background-color: #f2f2f2;}
-
-  #shipments tr:hover {background-color: #ddd;}
-
-  #shipments th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: rgb(33, 214, 142);
-    color: white;
-  }
 </style>
 
 {% endblock %}
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/JsBarcode.all.min.js"></script>
+
 <div class="container">
-<table id="shipments">
-    <thead>
-        <tr>
-            <th class="pb-3" colspan="2">"Shipment {{shipment.shipment_code}}" Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Shipment Status</td>
-            <td>{{shipment.shipment_code}}</td>
-        </tr>
-        <tr>
-            <td>Pickup Time</td>
-            <td>{{shipment.pickup_time}}</td>
-        </tr>
-        <tr>
-            <td>Dropoff Time Time</td>
-            <td>{{shipment.pickup_time}}</td>
-        </tr>
-        <tr>
-            <td>Sender Name</td>
-            <td>{{shipment.sender_name}}</td>
-        </tr>
-        <tr>
-            <td>Sender Email</td>
-            <td>{{shipment.sender_email}}</td>
-        </tr>
-        <tr>
-            <td>Pickup City</td>
-            <td>{{shipment.pickup_city}}</td>
-        </tr>
+<div class="activity">
+    <h2 class="text-center mt-4 mb-4">Shipment "{{shipment.shipment_code}}" Details
+        <svg id="barcode">
+    </svg>
+    </h2>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+              <li class="list-group-item ">Requested Date : {{ shipment.created_at}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Pick Up Time : {{ shipment.pickup_time|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+                 <li class="list-group-item ">Drop Off Time : {{ shipment.dropoff_time|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Sender Name : {{ shipment.sender_name|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+                 <li class="list-group-item ">Sender Email: {{ shipment.sender_email|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Pick Up City: {{ shipment.pickup_city|default_if_none:"Not Available"}}</li>
+            </ul>
+             <ul class="list-group">
+              <li class="list-group-item ">Pick Up City: {{ shipment.pickup_street_address|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Receiver Name: {{ shipment.receiver_name|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item ">Receiver Email: {{ shipment.receiver_email|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Receiver contact : {{ shipment.receiver_contact|default_if_none:"Not Available"}}</li>
+            </ul>
 
-        <tr>
-            <td>Pickup Street Address</td>
-            <td>{{shipment.pickup_street_address}}</td>
-        </tr>
-        <tr>
-            <td>Receiver Name</td>
-            <td>{{shipment.receiver_name}}</td>
-        </tr>
-        <tr>
-            <td>Receiver Email</td>
-            <td>{{shipment.receiver_email}}</td>
-        </tr>
-        <tr>
-            <td>Receiver Contact</td>
-            <td>{{shipment.receiver_contact}}</td>
-        </tr>
-        <tr>
-            <td>Receiver Alt Contact</td>
-            <td>{{shipment.receiver_alt_contact}}</td>
-        </tr>
-        <tr>
-            <td>Dropoff City</td>
-            <td>{{shipment.dropoff_city}}</td>
-        </tr>
-        <tr>
-            <td>Dropoff Street Address</td>
-            <td>{{shipment.dropoff_street_address}}</td>
-        </tr>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group">
+              <li class="list-group-item ">Receiver alt contact : {{ shipment.receiver_alt_contact|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Drop Off City : {{ shipment.dropoff_city|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item ">Drop Off Street Address: {{ shipment.dropoff_street_address|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Parcel Type : {{ shipment.parcel_type|default_if_none:"Not Available"}}</li>
+            </ul>
 
-        <tr>
-            <td>Parcel Type</td>
-            <td>{{ shipment.parcel_type }}</td>
-        </tr>
-        <tr>
-            <td>Parcel Barcode</td>
-            <td>{{shipment.parcel_barcode}}</td>
-        </tr>
-        <tr>
-            <td>Parcel Weight</td>
-            <td>{{shipment.parcel_weight}}</td>
-        </tr>
-        <tr>
-            <td>Parcel Length</td>
-            <td>{{shipment.parcel_length}}</td>
-        </tr>
-        <tr>
-            <td>Parcel Width</td>
-            <td>{{shipment.parcel_width}}</td>
-        </tr>
-        <tr>
-            <td>Parcel height</td>
-            <td>{{shipment.parcel_height}}</td>
-        </tr>
-        <tr>
-            <td>Parcel Weight</td>
-            <td>{{shipment.parcel_weight}}</td>
-        </tr>
-        <tr>
-            <td>Parcel Total</td>
-            <td>{{shipment.parcel_total}}</td>
-        </tr>
-        <tr>
-            <td>Customer Payment Status</td>
-            <td>{{shipment.customer_payment_status}}</td>
-        </tr>
-        <tr>
-            <td>Mode of Payment</td>
-            <td>{{ shipment.mode_of_payment }}</td>
-        </tr>
-        <tr>
-            <td>Shipping Charge</td>
-            <td>{{ shipment.shipping_charge }}</td>
-        </tr>
-    </tbody>
-</table>
+            <ul class="list-group">
+              <li class="list-group-item ">Parcel Volume : {{ shipment.volume|default_if_none:"Not Available"}}cc</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Parcel Weight : {{ shipment.parcel_weight|default_if_none:"Not Available"}}gm</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item ">Parcel Amount : {{ shipment.parcel_total|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Customer Payment Status : {{ shipment.customer_payment_status|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item ">Mode of Payment : {{ shipment.mode_of_payment|default_if_none:"Not Available"}}</li>
+            </ul>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">Shipping Charge : {{ shipment.mode_of_payment|default_if_none:"Not Available"}}</li>
+            </ul>
+
+        </div>
+    </div>
 </div>
+</div>
+    {% if activity_set %}
+<div class="section">
+<div class="container">
+    <div class="list-group mt-4  ">
+    <h4 class="text-center">Shipment Activities</h4>
+    <table class="table">
+  <tbody>
+    {% for activity in activity_set %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ activity.activity }}</td>
+            <td>{{ activity.created_at }}</td>
+        </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{#      <h5 class="list-group-item ">#}
+{#        Shipment Activities#}
+{#      </h5>#}
+{##}
+{#        {% for activity in activity_set %}#}
+{#    <li class="list-group-item">{{ forloop.counter }}. {{ activity.activity }} {{ activity.created_at|date }}</li>#}
+{#    {% endfor %}#}
+    </div>
+
+
+</div>
+</div>
+    {% endif %}
+    <script type="text/javascript">
+	    JsBarcode("#barcode", '{{shipment.shipment_code}}', {
+	        width:1,
+          height: 40,
+          displayValue: false
+        });
+    </script>
+
 {% endblock %}

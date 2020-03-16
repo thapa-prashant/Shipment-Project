@@ -42,7 +42,9 @@
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
+          <th>Sender Name</th>
         <th>Receiver Name</th>
+
       </tr>
   </thead>
   <tbody>
@@ -51,6 +53,7 @@
             <td>{{forloop.counter}}</td>
             <td><a href="{% url 'shipmentapp:shipmentdetail' shipment.id %}">{{ shipment.shipment_code }}</a></td>
             <td>{{shipment.created_at}}</td>
+            <td>{{ shipment.sender_name }}</td>
             <td>{{shipment.receiver_name}}</td>
 
         </tr>
@@ -61,7 +64,9 @@
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
+          <th>Sender Name</th>
         <th>Receiver Name</th>
+
       </tr>
   </tfoot>
 </table>

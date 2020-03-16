@@ -24,16 +24,19 @@
                             <div class="form-group">
                                 <label class="form-control-label">PASSWORD</label>
                                 {{ form.password }}
+                                {% if error or request.GET.err %}
+                                        <li class="text-danger">Invalid username or password</li>
+                                    {% endif %}
                             </div>
 
                             <div class="col-lg-12 loginbttm">
-                                <div class="col-lg-6 login-btm login-text">
-                                    <!-- Error Message -->
-                                    {% if error or request.GET.err %}
-                                        <li class="text-danger">Invalid username or password</li>
-                                    {% endif %}
+                                <div class="col-lg-9 login-btm login-text">
+                                    <p class="text-md" style="color: aliceblue">
+                                Don't have an account?&nbsp;<a href="{% url 'shipmentapp:registration' %}" class="strong-600">Register Here!</a>
+                            </p>
+
                                 </div>
-                                <div class="col-lg-6 login-btm login-button">
+                                <div class="col-lg-3 login-btm login-button">
                                     <button type="submit" class="btn btn-outline-primary">LOGIN</button>
                                 </div>
                             </div>
@@ -49,85 +52,87 @@
     <style>
 
 
-.login-box {
-    margin-top: 75px;
-    height: auto;
-    background: #1A2226;
-    text-align: center;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
+        .login-box {
+            margin-top: 75px;
+            height: auto;
+            background: #1A2226;
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            margin-left: 15px;
+            margin-right: 15px;
+        }
 
 
 
-.login-title {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 30px;
-    letter-spacing: 2px;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #ECF0F5;
-}
+        .login-title {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 30px;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #ECF0F5;
+        }
 
-.login-form {
-    margin-top: 25px;
-    text-align: left;
-}
+        .login-form {
+            margin-top: 25px;
+            text-align: left;
+        }
 
-.form-group {
-    margin-bottom: 40px;
-    outline: 0px;
-}
+        .form-group {
+            margin-bottom: 40px;
+            outline: 0px;
+        }
 
 
 
-input:focus {
-    outline: none;
-    box-shadow: 0 0 0;
-}
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0;
+        }
 
-label {
-    margin-bottom: 0px;
-}
+        label {
+            margin-bottom: 0px;
+        }
 
-.form-control-label {
-    color: #bcbcbc;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
+        .form-control-label {
+            color: #bcbcbc;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
 
-.btn-outline-primary {
-    border-color: #0DB8DE;
-    color: #0DB8DE;
-    border-radius: 0px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
+        .btn-outline-primary {
+            border-color: #0DB8DE;
+            color: #0DB8DE;
+            border-radius: 0px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
 
-.btn-outline-primary:hover {
-    background-color: #0DB8DE;
-    right: 0px;
-}
+        .btn-outline-primary:hover {
+            background-color: #0DB8DE;
+            right: 0px;
+        }
 
-.login-btm {
-    float: left;
-}
+        .login-btm {
+            float: left;
+        }
 
-.login-button {
-    padding-right: 0px;
-    text-align: right;
-    margin-bottom: 25px;
-}
+        .login-button {
+            padding-right: 0px;
+            text-align: right;
+            margin-bottom: 25px;
+        }
 
-.login-text {
-    text-align: left;
-    padding-left: 0px;
-    color: #bbbdbd;
-}
+        .login-text {
+            text-align: left;
+            padding-left: 0px;
+            color: #bbbdbd;
+        }
 
-.loginbttm {
-    padding: 0px;
-}
+        .loginbttm {
+            padding: 0px;
+        }
     </style>
 {% endblock %}
