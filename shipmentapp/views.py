@@ -108,9 +108,9 @@ class RegistrationView(FormView):
                 }
 
         resp = requests.post(registration_api,data=data)
-        print(resp.json())
+        # print(resp.json())
         if resp.json().get('fail'):
-            return render(self.request,self.template_name,{'form':form,'error':'Email already exists.'})
+            return render(self.request,self.template_name,{'form':form,'error':"Email you've entered already exists."})
         return super().form_valid(form)
 
 
@@ -128,6 +128,7 @@ class PartnerRequiredMixin(object):
                     self.company = resp.json()['partner']['partner_company']
                     self.address = resp.json()['partner']['address']
                     self.contact = resp.json()['partner']['contact']
+                    self.partner_full_name = resp.json()['partner']['partner_full_name']
                 else:
                     return redirect('/login/?err=err')
             else:
@@ -140,6 +141,7 @@ class PartnerRequiredMixin(object):
         context = super().get_context_data(**kwargs)
         context['email'] = self.email
         context['id'] = self.id
+        context['name'] = self.partner_full_name
         return context
 
 
@@ -186,7 +188,6 @@ class UserUpdateView(PartnerRequiredMixin,FormView):
              }
 
         response = requests.put("http://127.0.0.1:8000/api/v1/update/" + str(self.id) + "/",data=data,headers=self.headers)
-        print(response.json())
         return super().form_valid(form)
 
 
@@ -210,11 +211,11 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
         context['email'] = self.email
         shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?status=" + status + "&page=" + page_num
         shipments = requests.get(shipmentlist_api, headers=self.headers)
-        print(shipments.json()['results'])
         context['shipments'] = shipments.json()['results']
         context['shipment_type'] = status.upper()
         context['status'] = status
         context['shipment_count'] = len(shipments.json()['results'])
+        print(shipments.json()['next'])
         if shipments.json()['next']:
             context['next'] = shipments.json()['next']
         if shipments.json()['previous']:
@@ -227,11 +228,11 @@ class ShipmentDetailView(PartnerRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         self.id = self.kwargs['pk']
-        print(self.id)
         shipmentdetail_api = 'http://127.0.0.1:8000/api/v1/partner/shipment-' + str(self.id) +'/detail/'
         resp = requests.get(shipmentdetail_api,headers= self.headers)
         context = super().get_context_data(**kwargs)
         context['shipment'] = resp.json()
+        context['activity_set'] = resp.json()['shipmentactivity_set']
         return context
 
 
@@ -256,7 +257,6 @@ class RequestShipmentView(PartnerRequiredMixin, FormView):
         data['pickup_street_address'] = self.address
         data['contact'] = self.contact
         resp = requests.post(request_shipment_api, headers=self.headers, data=data)
-        print(resp.json())
         return super().form_valid(form)
 
 
@@ -267,7 +267,6 @@ class PasswordChangeView(PartnerRequiredMixin,FormView):
 
     def form_valid(self, form):
         old_password = form.cleaned_data['old_password']
-        print()
         new_password = form.cleaned_data['new_password']
         data = {
             'old_password': old_password,
@@ -282,4 +281,4 @@ class PasswordChangeView(PartnerRequiredMixin,FormView):
 
 
 class Demoview(TemplateView):
-    template_name = 'demoview.html'
+    template_name = 'barcode.html'

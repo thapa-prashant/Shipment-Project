@@ -1,0 +1,20 @@
+
+{% extends 'dashboardbase.html' %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/JsBarcode.all.min.js"></script>
+     <svg id="barcode">
+
+    </svg>
+
+<script type="text/javascript">
+	    JsBarcode("#barcode", "1234", {
+          format: "pharmacode",
+          lineColor: "#0aa",
+          width: 4,
+          height: 40,
+          displayValue: false
+        });
+
+    </script>
+{% endblock %}
+

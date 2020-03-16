@@ -27,22 +27,31 @@
   }
 </style>
 
+
+
 {% endblock %}
+
+
 {% block content %}
 
 <div class="container">
 
+{% if shipments %}
 <h3 class="mt-4 mb-4" style="position: center;">"{{shipment_type}}" Shipments ({{shipment_count}})</h3>
 
 
 
-<table id="example" class="display nowrap" style="width:100%">
+
+
+<table id="example" class="table display nowrap" style="">
   <thead>
-      <tr style="background:  #FE9745">
+      <tr style="" class="bg-dark text-white" >
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
+          <th>Sender Name</th>
         <th>Receiver Name</th>
+
       </tr>
   </thead>
   <tbody>
@@ -51,47 +60,53 @@
             <td>{{forloop.counter}}</td>
             <td><a href="{% url 'shipmentapp:shipmentdetail' shipment.id %}">{{ shipment.shipment_code }}</a></td>
             <td>{{shipment.created_at}}</td>
+            <td>{{ shipment.sender_name }}</td>
             <td>{{shipment.receiver_name}}</td>
 
         </tr>
         {% endfor %}
   </tbody>
   <tfoot>
-      <tr>
+      <tr style="" class="bg-dark text-white" >
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
+          <th>Sender Name</th>
         <th>Receiver Name</th>
+
       </tr>
   </tfoot>
 </table>
-    </div>
-
-
-
-
+    {% else %}
+    <h1 class="text-center">No Shipment Available</h1>
+{% endif %}
+</div>
 
 
 
 {% block js %}
-<script type="text/javascript">
+{#<script type="text/javascript">#}
+{##}
+{##}
+{#$(document).ready(function() {#}
+{#    var table = $('#example').DataTable( {#}
+{#        rowReorder: {#}
+{#            selector: 'td:nth-child(2)'#}
+{#        },#}
+{#        responsive: true#}
+{#    } );#}
+{#} );#}
+{##}
+{##}
+{##}
+{##}
+{#</script>#}
 
-
-$(document).ready(function() {
-    var table = $('#example').DataTable( {
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
-    } );
-} );
-
-
-
-
-</script>
-
-
+{#    <a href="{{ next }}"> <button>next</button></a>#}
+{#    <a href="{{ previous }}"> <button>previous</button></a>#}
+{##}
+{#    {{ next }}#}
+{#    {{ previous }}#}
 
 
 

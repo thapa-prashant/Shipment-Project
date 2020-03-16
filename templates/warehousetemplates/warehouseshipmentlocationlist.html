@@ -74,7 +74,7 @@ Warehouse - Shipment Location List Page
                                             <div class="col-md-4">
                                                 <strong>Shipment Code</strong>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-md-8 shipment_code" data-id = "{{shipment.shipment.id}}">
                                                 : {{shipment.shipment.shipment_code}}
                                             </div>
                                         </p>
@@ -106,7 +106,10 @@ Warehouse - Shipment Location List Page
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-warning" data-dismiss="modal">Never Mind</button>
-                            <button type="button" class="btn btn-success">Accept Shipment</button>
+                            <button type="button" 
+                                data-id="{{shipment.shipment.id}}" 
+                                data-code="{{shipment.shipment.shipment_code}}" 
+                                class="btn btn-success accept_shipment_request">Accept Shipment</button>
                           </div>
                         </div>
                       </div>
@@ -128,6 +131,23 @@ Warehouse - Shipment Location List Page
             $('#myInput').trigger('focus')
         })
 
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $('.accept_shipment_request').on('click', function() {
+            var id = $(this).data('id')
+            var code = $(this).data('code')
+
+            $.ajax({
+                'data': {
+                    id, code,
+                'success': function() {
+                    location.reload()
+                }
+                }
+            })
+        })
     })
 </script>
 {% endblock %}

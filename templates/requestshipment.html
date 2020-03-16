@@ -1,8 +1,11 @@
 {% extends 'dashboardbase.html' %}
 {% block requestshipment %}active{% endblock %}
+{% block requestshipmenttitle %}Request Shipment{% endblock %}
 
 {% block content %}
     <style>
+
+
                 /* Chrome, Safari, Edge, Opera */
                 input::-webkit-outer-spin-button,
                 input::-webkit-inner-spin-button {
@@ -14,13 +17,20 @@
                   -moz-appearance: textfield;
                 }
     </style>
-<div class="container">
-    <div class="col-md-12">
-        <h3 class="mt-5 ">Request Shipment</h3>
 
-<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded col-md-8 offset-md-2  ">
+
+{#    <div class="card bg-secondary">#}
+    <div class="card-body ">
+<div class="container">
+
+
+<div class="shadow-lg p-3 mb-5 mt-5rounded col-md-8 bg-dark text-white offset-md-2" >
+<div class="panel panel-default card-view">
 <form method="post" >
   {% csrf_token %}
+    <h3 class="heading heading-4 strong-500 text-center mb-5 ">
+     Request Shipment
+    </h3>
   <div class="form-row ">
     <div class="form-group col-md-6">
       <label><strong>Receiver name</strong><small>*</small></label>
@@ -32,87 +42,94 @@
         {{form.receiver_contact}}
         {% for error in form.non_field_errors %}
                                 <li class="text-danger">{{error}}</li>
-                                {% endfor %}
+         {% endfor %}
 
     </div>
   </div>
-  <div class="form-row">
-  <div class="form-group col-md-6">
-    <label><strong>Receiver alt contact</strong></label>
+                  <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label><strong>Receiver alt contact</strong></label>
 
-      {{form.receiver_alt_contact}}
-  </div>
-  <div class="form-group col-md-6">
-    <label><strong>Receiver email</strong><small>*</small></label>
-<!--    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">-->
-  {{form.receiver_email}}
-  </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label><strong>Dropoff street address</strong><small>*</small></label>
-      {{ form.dropoff_street_address}}
-    </div>
-    <div class="form-group col-md-6">
-      <label><strong>Droff off City</strong></label>
-      {{form.dropoff_city}}
-    </div>
+                      {{form.receiver_alt_contact}}
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label><strong>Receiver email</strong><small>*</small></label>
+                <!--    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">-->
+                  {{form.receiver_email}}
+                  </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label><strong>Dropoff street address</strong><small>*</small></label>
+                      {{ form.dropoff_street_address}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label><strong>Droff off City</strong></label>
+                      {{form.dropoff_city}}
+                    </div>
 
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label><strong>Parcel type</strong></label>
-      {{ form.parcel_type}}
-    </div>
-    <div class="form-group col-md-6">
-      <label><strong>Parcel Weight</strong><small>*</small></label>
-      {{form.parcel_weight}}
-    </div>
-
-
-  </div>
-  <div class="form-row">
-
-    <div class="form-group col-md-3">
-      <label><strong>Parcel Length</strong><small>*</small></label>
-      {{ form.parcel_length}}
-    </div>
-    <div class="form-group col-md-3">
-      <label><strong>Parcel Height</strong><small>*</small></label>
-      {{form.parcel_height}}
-    </div>
-    <div class="form-group col-md-3">
-      <label><strong>Parcel Width</strong><small>*</small></label>
-      {{form.parcel_width}}
-    </div>
-    <div class="form-group col-md-3">
-      <label><strong>Parcel total</strong><small>*</small></label>
-      {{ form.parcel_total}}
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <label><strong>Customer payment status</strong></label>
-      {{ form.customer_payment_status}}
-    </div>
-    </div>
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <label><strong>Mode of payment</strong></label>
-      {{ form.mode_of_payment}}
-    </div>
-
-  </div>
-
-  <div class="form-group">
-      <button id="button" type="submit" class="btn btn-block btn-dark btn-theme-colored btn-sm mt-20 pt-10 pb-10" data-loading-text="Please wait...">Submit Data</button>
-  </div>
-</form>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label><strong>Parcel type</strong></label>
+                      {{ form.parcel_type}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label><strong>Parcel Weight</strong><small>*</small></label>
+                      {{form.parcel_weight}}
+                    </div>
 
 
-    </div>
+                  </div>
+                  <div class="form-row">
+
+                    <div class="form-group col-md-3">
+                      <label><strong>Parcel Length</strong><small>*</small></label>
+                      {{ form.parcel_length}}
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label><strong>Parcel Height</strong><small>*</small></label>
+                      {{form.parcel_height}}
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label><strong>Parcel Width</strong><small>*</small></label>
+                      {{form.parcel_width}}
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label><strong>Total amount</strong><small>*</small></label>
+                      {{ form.parcel_total}}
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 offset-md-4">
+                      <label><strong>Customer payment status</strong></label>
+                      {{ form.customer_payment_status}}
+                    </div>
+                    </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 offset-md-4">
+                      <label><strong>Mode of payment</strong></label>
+                      {{ form.mode_of_payment}}
+                    </div>
+
+                  </div>
+
+                    <div class="form-group text-center">
+                        <button id="button" type="submit" class="btn btn-outline-light btn-group-lg mt-20 pt-10 pb-10" data-loading-text="Please wait...">Request</button>
+                    </div>
+        </form>
+
+
+</div>
+
 </div>
 </div>
+{#</div>#}</div>
+
+
+
+
+
 
 
 {% endblock %}
