@@ -1,12 +1,11 @@
 {% extends 'dashboardbase.html' %}
-
+{% block title %} Profile Update {% endblock %}
 {% block content %}
 
 
       <style>
 
-
-                /* Chrome, Safari, Edge, Opera */
+               /* Chrome, Safari, Edge, Opera */
                 input::-webkit-outer-spin-button,
                 input::-webkit-inner-spin-button {
                   -webkit-appearance: none;
@@ -18,17 +17,16 @@
                 }
     </style>
 
-
-    <div class="page-wrapper">
+{#<div class="page-wrapper">#}
 <div class="container">
 
 
-<div class="shadow-lg p-3 mb-5 mt-5 bg-dark text-white rounded col-md-8 offset-md-2  ">
+<div class="shadow-lg p-3 mb-5 mt-5 bg-dark text-white rounded col-md-8 offset-md-2">
 <div class="panel panel-default card-view">
 <form method="post" >
   {% csrf_token %}
     <h3 class="heading heading-4 strong-500 text-center mb-5 ">
-     Update Profile
+     <strong>Update Profile</strong>
     </h3>
      <div class="form-row ">
     <div class="form-group col-md-6">
@@ -85,7 +83,7 @@
 
 </div>
 </div>
-    </div>
+{#    </div>#}
 
 
 
