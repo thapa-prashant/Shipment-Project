@@ -121,6 +121,7 @@ class PartnerRequiredMixin(object):
                 token = "Token " + request.session.get('token')
                 self.headers = {'Authorization': token}
                 resp = requests.get('http://127.0.0.1:8000/api/v1/user-profile/', headers=self.headers)
+                # print(resp.json())
                 if 'partner' in resp.json():
                     self.partner = resp.json()['partner']
                     self.id = resp.json()['partner']['id']
@@ -207,13 +208,15 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         status = self.request.GET.get('status', "all-shipment")
         page_num = self.request.GET.get('page_num', "1")
+        print(page_num)
         context = super().get_context_data(**kwargs)
         context['email'] = self.email
-        shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?status=" + status + "&page=" + page_num
+        shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?page=" + page_num + "&status=" + status
         shipments = requests.get(shipmentlist_api, headers=self.headers)
         context['shipments'] = shipments.json()['results']
         context['shipment_type'] = status.upper()
         context['status'] = status
+        # context['page_num'] = page_num
         context['shipment_count'] = len(shipments.json()['results'])
         print(shipments.json()['next'])
         if shipments.json()['next']:

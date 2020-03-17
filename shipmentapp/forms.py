@@ -22,7 +22,6 @@ class RegistrationForm(forms.Form):
     contact = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
     }))
-
     alt_contact = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         'class': 'form-control mb-3',
         'placeholder': 'Your alternative contact',
