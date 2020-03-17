@@ -19,7 +19,6 @@ Warehouse - New Shipment Location List Page
                <tr>
                    <th>ID</th>
                    <th>Shipment Code</th>
-                   <th>Origin WareHouse</th>
                    <th>Dropoff Address</th>
                    <th>Staff</th>
                    <th>Status</th>
@@ -35,9 +34,6 @@ Warehouse - New Shipment Location List Page
                        {{shipment.shipment.shipment_code}}
                    </td>
                    <td>
-                       {{shipment.warehouse}}
-                    </td>
-                   <td>
                         {{shipment.shipment.receiver_name}}({{shipment.shipment.receiver_contact}})<br>
                         {{shipment.shipment.dropoff_city}}<br>
                         {{shipment.shipment.dropoff_street_address}}
@@ -51,12 +47,13 @@ Warehouse - New Shipment Location List Page
                     <!-- </td> -->
                    <td>
                         <!-- <a data-href="" data-toogle="model" class="btn btn-success"><i class="fa fa-edit"></i></a> -->
+                        <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#shipment_ready_modal_{{shipment.shipment.id}}"> -->
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#shipment_ready_modal_{{shipment.shipment.id}}">
-                            <i class="fa fa-check"></i>
+                            Assign Staff
                         </button>
                         <a data-href="" data-toogle="model" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                     </td>
-                    <!-- Modal -->
+                    <!-- Modal
                     <div class="modal fade" id="shipment_ready_modal_{{shipment.shipment.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -110,7 +107,7 @@ Warehouse - New Shipment Location List Page
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                 </tr>
                 {% endfor %}
            </tbody>

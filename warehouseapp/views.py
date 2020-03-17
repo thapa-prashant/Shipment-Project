@@ -139,8 +139,10 @@ class WareHouseAdminShipmentListView(LogisticAdminRequiredMixin, TemplateView):
         
         return context
 
-class WareHouseAdminShipmentLocationListView(LogisticAdminRequiredMixin, TemplateView):
+class WareHouseAdminShipmentLocationListView(LogisticAdminRequiredMixin, FormView):
     template_name = "warehousetemplates/warehouseshipmentlocationlist.html"
+    form_class = ShipmentLocationForm
+    success_url = reverse_lazy('warehouseapp:warehousehome')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -148,12 +150,34 @@ class WareHouseAdminShipmentLocationListView(LogisticAdminRequiredMixin, Templat
         response = requests.get(shipmentlocationapi_url, headers = self.headers)
         shipmentlocation_list = response.json()['results']
         context['shipmentlocation_list'] = shipmentlocation_list
-        if self.request.is_ajax():
-            shipment_id = self.request.GET.get('id')
-            print(shipment_id, '0000000000000000000000000000000000')
+        posts = {
+            'shipment': 101,
+            'warehouse': 2,
+            'status': 'Incoming',
+            'note': 'Note Note',
+        }
+        context['form'] = ShipmentLocationForm(initial=posts)
 
         return context
+    
+    def form_valid(self, form):
+        shipmentlocation_request_api = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/new-order/create/"
+        data = form.cleaned_data
+        resp = requests.post(shipmentlocation_request_api, headers = self.headers, data=data)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print('form is invalid')
+        return super().form_invalid(form)
 
 class WareHouseAdminNewShipmentLocationListView(LogisticAdminRequiredMixin, TemplateView):
     template_name = "warehousetemplates/warehousenewshipmentlocationlist.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        shipmentlocationapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/direct-lists/"
+        response = requests.get(shipmentlocationapi_url, headers = self.headers)
+        shipmentlocation_list = response.json()['results']
+        context['shipmentlocation_list'] = shipmentlocation_list
+
+        return context
