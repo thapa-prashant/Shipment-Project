@@ -89,6 +89,14 @@ class RegistrationView(FormView):
     form_class = RegistrationForm
     success_url = reverse_lazy('shipmentapp:dashboard')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        citilist_api = "http://127.0.0.1:8000/api/v1/partner/city-list/"
+        resp = requests.get(citilist_api)
+        cities = resp.json()
+        kwargs['cities'] = cities
+        return kwargs
+
     def form_valid(self, form):
         registration_api = "http://127.0.0.1:8000/api/v1/user-registration/"
         email = form.cleaned_data["email"]
@@ -96,13 +104,13 @@ class RegistrationView(FormView):
         partner_full_name = form.cleaned_data["partner_full_name"]
         partner_company = form.cleaned_data["partner_company"]
         contact = form.cleaned_data["contact"]
-        alt_contact = form.cleaned_data['alt_contact']
         address = form.cleaned_data["address"]
+        city = form.cleaned_data['city']
         data = {'email':email,
                 'password':password,
                 'partner_full_name':partner_full_name,
                 'contact':contact,
-                'alt_contact':alt_contact,
+                'city':city,
                 'address':address,
                 'partner_company':partner_company
                 }
@@ -277,7 +285,6 @@ class PasswordChangeView(PartnerRequiredMixin,FormView):
         if response.json().get('error'):
             return render(self.request,self.template_name,{'form':form,'error':'Old password is incorrect.'})
         return super().form_valid(form)
-
 
 
 class Demoview(TemplateView):
