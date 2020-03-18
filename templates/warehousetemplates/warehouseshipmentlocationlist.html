@@ -44,17 +44,24 @@ Warehouse - Shipment Location List Page
                     </td>
                    <td>{{shipment.staff}}</td>
                    <td>
+                       {% if status == "completed" or status == "transit" or status == "failed" %}
+                        {{shipment.shipment.shipment_status}}
+                        {% endif %}
                         {{shipment.status}}
                     </td>
                     <td>
                         {{shipment.created_at}}
                     </td>
                    <td>
+                       {% if status == "completed" or status == "transit" or status == "requested" %}
+                        <a data-href="" data-toogle="model" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                        {% else %}
                         <!-- <a data-href="" data-toogle="model" class="btn btn-success"><i class="fa fa-edit"></i></a> -->
                         <button type="button" class="btn btn-success shipmentcheck_button" data-toggle="modal" data-warehouse="{{shipment.destination_warehouse}}" data-target="#shipment_ready_modal_{{shipment.shipment.id}}">
                             <i class="fa fa-check"></i>
                         </button>
                         <a data-href="" data-toogle="model" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        {% endif %}
                     </td>
                     <!-- Modal -->
                     <div class="modal fade" id="shipment_ready_modal_{{shipment.shipment.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
