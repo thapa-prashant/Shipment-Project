@@ -24,7 +24,7 @@ class LogisticAdminRequiredMixin(object):
                 # print(' dispath try if ------------')
                 token = "Token " + request.session.get('token')
                 self.headers = {'Authorization': token}
-                resp = requests.get('http://127.0.0.1:8000/api/ladmin/logisticadmin-profile/', 
+                resp = requests.get('http://127.0.0.1:8000/api/v1/ladmin/logisticadmin-profile/', 
                     headers = self.headers)
                 # print(resp.json(), ' dispath try if resp ------------')
                 if 'logisticadmin' in resp.json():
@@ -47,23 +47,10 @@ class LogisticAdminRequiredMixin(object):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['user'] = self.user
+        context['user'] = self.user
         # context['id'] = self.id
         # context['name'] = self.name
-        # warehouse = self.warehouse
-        pk = self.warehouse
-        warehouseapi_url = "http://127.0.0.1:8000/api/ladmin/warehouse/" + str(pk) + "/detail/"
-        response = requests.get(warehouseapi_url, headers = self.headers)
-        warehouse = response.json()
-        user = warehouse['logisticadmin_set']
-        user_dict = user[0]
-        user_name = user_dict['id']
-        print(type(user_dict))
-        print(type(user))
-        # print(warehouse)
-        
-        context['warehouse'] = warehouse
-        context['user'] = user_dict
+        context['warehouse'] = self.warehouse
         return context
 
 
@@ -72,9 +59,9 @@ class WareHouseHomeView(LogisticAdminRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # warehouseapi_url = "http://127.0.0.1:8000/api/ladmin/warehouse/information/"
+        # warehouseapi_url = "http://127.0.0.1:8000/api/v1/ladmin/warehouse/information/"
         # pk = self.warehouse
-        # warehouseapi_url = "http://127.0.0.1:8000/api/ladmin/warehouse/" + str(pk) + "/detail/"
+        # warehouseapi_url = "http://127.0.0.1:8000/api/v1/ladmin/warehouse/" + str(pk) + "/detail/"
         # response = requests.get(warehouseapi_url, headers = self.headers)
         # warehouse = response.json()
         # print(warehouse)
@@ -98,7 +85,7 @@ class WareHouseAdminLoginView(FormView):
         try:
             resp = requests.post(url = loginapi_url, data = data)
             resp_data = resp.json()
-            print(resp_data, '\n Form valid try case')
+            # print(resp_data, '\n Form valid try case')
             if resp_data.get('token'):
                 self.request.session['token'] = resp_data.get('token')
             else:
@@ -122,5 +109,75 @@ class WareHouseAdminProfileView(LogisticAdminRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        return context
+
+
+class WareHouseAdminStaffListView(LogisticAdminRequiredMixin, TemplateView):
+    template_name = "warehousetemplates/warehousestafflist.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stafflistapi_url = "http://127.0.0.1:8000/api/v1/ladmin/logisticstaff-all-lists/"
+        response = requests.get(stafflistapi_url, headers = self.headers)
+        staff_list = response.json()['results']
+        context['staff_list'] = staff_list
+
+        print(staff_list)
+        return context
+
+
+class WareHouseAdminShipmentListView(LogisticAdminRequiredMixin, TemplateView):
+    template_name = "warehousetemplates/warehouseshipmentlist.html"
+
+    def  get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        shipmentapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-all/lists/"
+        response = requests.get(shipmentapi_url, headers = self.headers)
+        shipment_list = response.json()['results']
+        context['shipment_list'] = shipment_list
+        
+        return context
+
+class WareHouseAdminShipmentLocationListView(LogisticAdminRequiredMixin, FormView):
+    template_name = "warehousetemplates/warehouseshipmentlocationlist.html"
+    form_class = ShipmentLocationForm
+    success_url = reverse_lazy('warehouseapp:warehousehome')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        shipmentlocationapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/requested-lists/"
+        response = requests.get(shipmentlocationapi_url, headers = self.headers)
+        shipmentlocation_list = response.json()['results']
+        context['shipmentlocation_list'] = shipmentlocation_list
+        posts = {
+            'shipment': 101,
+            'warehouse': 2,
+            'status': 'Incoming',
+            'note': 'Note Note',
+        }
+        context['form'] = ShipmentLocationForm(initial=posts)
+
+        return context
+    
+    def form_valid(self, form):
+        shipmentlocation_request_api = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/new-order/create/"
+        data = form.cleaned_data
+        resp = requests.post(shipmentlocation_request_api, headers = self.headers, data=data)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print('form is invalid')
+        return super().form_invalid(form)
+
+class WareHouseAdminNewShipmentLocationListView(LogisticAdminRequiredMixin, TemplateView):
+    template_name = "warehousetemplates/warehousenewshipmentlocationlist.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        shipmentlocationapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/direct-lists/"
+        response = requests.get(shipmentlocationapi_url, headers = self.headers)
+        shipmentlocation_list = response.json()['results']
+        context['shipmentlocation_list'] = shipmentlocation_list
 
         return context

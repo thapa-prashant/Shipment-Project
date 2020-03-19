@@ -13,12 +13,14 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>
+        {% block title %} {% endblock %}
         {% block requestshipmenttitle %} {% endblock %}
         {% if status == 'all-shipment' %}All Shipments{% else %} {% endif %}
         {% if status == 'requested' %}Requested Shipments{% else %} {% endif %}
         {% if status == 'processing' %}Processing Shipments{% else %} {% endif %}
-        {% if status == 'delivered' %}Deliverd Shipments{% else %} {% endif %}
+        {% if status == 'delivered' %}Successful Shipments{% else %} {% endif %}
         {% if status == 'failed' %}Failed Shipments{% else %} {% endif %}
+
 
     </title>
     {% block css %}
@@ -83,6 +85,11 @@
             background: #343A40;
         }
 
+        .logout a:hover{
+            background-color: #343A40;
+        }
+
+
 
 
     </style>
@@ -99,12 +106,12 @@
 
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                      <li class="nav-item active ">
+                <ul class="navbar-nav text-lg-left text-center col-xs-6 mr-auto mt-2 mt-lg-0 ">
+                      <li class="nav-item  ">
                         <a class="nav-link text-white {% block requestshipment %} {% endblock %} " href="{% url 'shipmentapp:requestshipment' %}">Request Shipment <span class="sr-only">(current)</span></a>
                       </li>
                       <li class="nav-item active">
-                        <a class="nav-link text-white {% if status == 'all-shipment' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=all-shipment">All Shipments</a>
+                        <a class="nav-link text-white {% if status == 'all-shipment' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?page=2&status=all-shipment">All Shipments</a>
                       </li>
                       <li class="nav-item active">
                         <a class="nav-link text-white  {% if status == 'requested' %}active{% else %} {% endif %} " href="{% url 'shipmentapp:allshipments' %}?status=requested">Requested Shipments</a>
@@ -129,14 +136,15 @@
         <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="/media/user2.png" width="40" height="40" class="rounded-circle">
         </a>
-        <div class="dropdown-menu dropdown-menu-right col-md-4 bg-dark" aria-labelledby="navbarDropdownMenuLink">
+        <div class="dropdown-menu dropdown-menu-right text-lg-left text-center  bg-dark" aria-labelledby="navbarDropdownMenuLink">
             <h6 class="font-weight-bold dropdown-item bg-light" >User:
                 <br> {{ name }}</h6>
 
-          <a class="dropdown-item text-white " href="{% url 'shipmentapp:userupdate' %}">Edit Profile</a>
-         <a class="dropdown-item text-white" href="{% url 'shipmentapp:changepassword' %}">Change Password</a>
-            <a class="dropdown-item text-white text-center " href="{% url 'shipmentapp:logout' %}"> <button class=" btn btn-sm btn-danger">Log Out</button></a>
-        </div>
+            <a class="dropdown-item text-white " href="{% url 'shipmentapp:userupdate' %}">Edit Profile</a>
+            <a class="dropdown-item text-white" href="{% url 'shipmentapp:changepassword' %}">Change Password</a>
+            <div class=" logout text-center"><a class=" dropdown-item text-white   " href="{% url 'shipmentapp:logout' %}"> <button class=" btn btn-sm btn-danger">Log Out</button></a>
+            </div>
+            </div>
       </li>
        </ul>
 

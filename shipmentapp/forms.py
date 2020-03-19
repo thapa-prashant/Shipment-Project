@@ -201,5 +201,4 @@ class PasswordUpdateForm(forms.Form):
 
         if len(new_password) < 6:
             raise forms.ValidationError("Your password should be at least 6 Characters")
-
         return cleaned_data

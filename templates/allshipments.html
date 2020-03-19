@@ -25,6 +25,28 @@
     background-color: rgb(33, 214, 142);
     color: white;
   }
+    .dataTables_filter > label{
+    color: white;
+    }
+
+.dataTables_length > label{
+    color: white;
+    }
+
+    .dataTables_info{
+    color: white;
+        background: white;
+    }
+
+.dataTables_paginate{
+    color: white;
+    background: white;
+}
+
+.dataTables_filter{
+    display: none;
+}
+
 </style>
 
 
@@ -36,16 +58,23 @@
 
 <div class="container">
 
+
+<div class="row mt-4">
+  <div class="col-md-12 ">
+<div class="card bg-dark card-center">
+
+    <div class="card-body ">
+
 {% if shipments %}
-<h3 class="mt-4 mb-4" style="position: center;">"{{shipment_type}}" Shipments ({{shipment_count}})</h3>
+<h3 class="mt-4 mb-4 text-center text-white" style="position: center;">"<strong>{{shipment_type}}" Shipments ({{shipment_count}})</strong></h3>
 
 
 
 
 
-<table id="example" class="table display nowrap" style="">
+<table id="example" class="table display nowrap bg-white" style="">
   <thead>
-      <tr style="" class="bg-dark text-white" >
+      <tr style="background: #FE9745"  >
           <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
@@ -78,9 +107,16 @@
   </tfoot>
 </table>
     {% else %}
-    <h1 class="text-center">No Shipment Available</h1>
+    <h3 class="text-center text-white"><strong>No Shipment Available</strong></h3>
 {% endif %}
 </div>
+</div>
+  </div>
+</div>
+</div>
+
+
+
 
 
 
@@ -96,20 +132,9 @@
 {#        responsive: true#}
 {#    } );#}
 {#} );#}
-{##}
-{##}
-{##}
-{##}
 {#</script>#}
 
-{#    <a href="{{ next }}"> <button>next</button></a>#}
-{#    <a href="{{ previous }}"> <button>previous</button></a>#}
-{##}
-{#    {{ next }}#}
-{#    {{ previous }}#}
+   {% endblock %}
 
-
-
-{% endblock %}
 
 {% endblock %}

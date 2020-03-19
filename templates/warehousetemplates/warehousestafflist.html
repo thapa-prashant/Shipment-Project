@@ -1,0 +1,47 @@
+{% extends 'warehousetemplates/warehousebase.html' %}
+{% load static %}
+
+{% block title %}
+Warehouse - Staff List Page
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Warehouse Staffs List Page</h1>
+        <p>Admin: {{user}}</p>
+        <!-- <p>User: {{user.id}}</p> -->
+        <p>WareHouse: {{warehouse}}</p>
+
+        <h5>Staffs: </h5>
+       <table class="table">
+           <thead>
+               <tr>
+                   <th>SN</th>
+                   <th>Staff Name</th>
+                   <th>Staff User</th>
+                   <th>Staff Type</th>
+                   <th>Staff Image</th>
+                   <th>Actions</th>
+               </tr>
+           </thead>
+           <tbody>
+               {% for staff in staff_list %}
+               <tr>
+                   <td>{{forloop.counter}}</td>
+                   <td>{{staff.name}}</td>
+                   <td>{{staff.user}}</td>
+                   <td>{{staff.staff_type}}</td>
+                   <td><img src="{{staff.image}}" alt="{{staff.name}}" height="40" width="48"></td>
+                   <td>
+                        <a href="" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+           </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
