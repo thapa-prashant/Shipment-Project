@@ -21,8 +21,11 @@
             <h5><a href=" {% url 'warehouseapp:warehousehome' %} ">Overview</a></h5>
             <h5><a href=" {% url 'warehouseapp:warehouseadminprofile' %} ">Profile</a></h5>
             <h5><a href=" {% url 'warehouseapp:warehouseadminstafflist' %} ">Staffs</a></h5>
-            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlocationlist' %} ">Shipment Notifications</a></h5>
-            <h5><a href=" {% url 'warehouseapp:warehouseadminnewshipmentlocationlist' %} ">New Shipments</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlocationlist' %}?status=notification_shipmentlocation ">Shipment Notifications</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlocationlist' %}?status=requested ">New Shipments</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlocationlist' %}?status=transit ">Transit Shipments</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlocationlist' %}?status=completed ">Completed Shipments</a></h5>
+            <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlocationlist' %}?status=failed ">Failed Shipments</a></h5>
             <h5><a href=" {% url 'warehouseapp:warehouseadminshipmentlist' %} ">Shipments</a></h5>
             <h5><a href=" {% url 'warehouseapp:warehousehome' %} ">Activities</a></h5>
             Logged in as: (<a href=" {% url 'warehouseapp:warehouseadminprofile' %} ">{{user}}</a>)

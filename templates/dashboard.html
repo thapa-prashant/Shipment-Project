@@ -5,15 +5,82 @@
 
 {% block content %}
 <div class="container">
-<h3 class="text-center mt-4" style="position: center;"> <strong>Dashboard</strong></h3>
+<h3 class="text-center" style="position: center;">Dashboard</h3>
+
+
 <div>
-{#    <div style="width: 30%; margin: 10vh 35% auto;">#}
-{#        <h3 style="position: center;">Update your profile</h3>#}
-{##}
-{#<a href="{% url 'shipmentapp:userupdate' %}"><button>Update</button></a>#}
-{#        <a href="{% url 'shipmentapp:changepassword' %}"><button>Change Password</button></a>#}
-{#            #}
-{#</div>#}
+    <div class="container">
+        <div class="chc mt-4 mb-4" style="background: #1A2226">
+
+        <h1 class="text-white text-center">Total COD Handling Charge : {{ chc.cod_handling_charge__sum }}</h1>
+    </div>
+        <div class="rhc mt-4 mb-4" style="background: #1A2226">
+
+        <h1 class="text-white text-center">Total Rejection Handling Charge : {{ rhc.rejection_handling_charge__sum }}</h1>
+    </div>
+        <div class="sc mt-4 mb-4" style="background: #1A2226">
+
+        <h1 class="text-white text-center">Total Shipping Charge : {{ sc.shipping_charge__sum }}</h1>
+    </div>
+    </div>
+    <div onload="loadChart()">
+        <div class="container">
+        <h2>Chart</h2>
+        <div>
+        <canvas id="myChart"></canvas>
+        </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <script>
+        function dspChrt(day, total) {
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: day,
+        datasets: [ {
+          label: 'Total Amount',
+          data: total,
+          backgroundColor: "rgba(255,5,0,0.61)"
+        }]
+        }
+        });
+        }
+
+        function loadChart(){
+          var data, day = [], total = [];
+
+          var requestURL = 'http://127.0.0.1:8000/api/v1/reports/'; //URL of the JSON data
+          var request = new XMLHttpRequest({mozSystem: true}); // create http request
+
+          request.onreadystatechange = function() {
+           if(request.readyState == 4 && request.status == 200) {
+              data = JSON.parse(request.responseText);
+              data = data.objects
+              //data = JSONdata;
+              for (var i=0; i<data.length;i++) {
+                  day.push(data[i].day);
+                  total.push(data[i].total);
+              }
+
+              /*
+              console.log('hum', hum);
+              console.log('vibrate', vibrate);
+              console.log('data', data);
+              */
+              dspChrt(day, total);
+            }
+          }
+        request.open('GET', requestURL);
+        request.send(); // send the request
+
+        }
+        loadChart();
+        //var myVar = setInterval(loadChart, 60000); // updates chart every one minute
+    </script>
 
 </div>
 

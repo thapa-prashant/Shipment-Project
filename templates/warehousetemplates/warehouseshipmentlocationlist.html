@@ -23,7 +23,7 @@ Warehouse - Shipment Location List Page
                    <th>Dropoff Address</th>
                    <th>Staff</th>
                    <th>Status</th>
-                   <!-- <th>Amounts</th> -->
+                   <th>Created_at</th>
                    <th>Actions</th>
                </tr>
            </thead>
@@ -44,21 +44,30 @@ Warehouse - Shipment Location List Page
                     </td>
                    <td>{{shipment.staff}}</td>
                    <td>
+                       {% if status == "completed" or status == "transit" or status == "failed" %}
+                        {{shipment.shipment.shipment_status}}
+                        {% endif %}
                         {{shipment.status}}
                     </td>
-                    <!-- <td> -->
-                        <!-- {{shipment.shipping_charge}} -->
-                    <!-- </td> -->
+                    <td>
+                        {{shipment.created_at}}
+                    </td>
                    <td>
+                       {% if status == "completed" or status == "transit" or status == "requested" %}
+                        <a data-href="" data-toogle="model" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                        {% else %}
                         <!-- <a data-href="" data-toogle="model" class="btn btn-success"><i class="fa fa-edit"></i></a> -->
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#shipment_ready_modal_{{shipment.shipment.id}}">
+                        <button type="button" class="btn btn-success shipmentcheck_button" data-toggle="modal" data-warehouse="{{shipment.destination_warehouse}}" data-target="#shipment_ready_modal_{{shipment.shipment.id}}">
                             <i class="fa fa-check"></i>
                         </button>
                         <a data-href="" data-toogle="model" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        {% endif %}
                     </td>
                     <!-- Modal -->
                     <div class="modal fade" id="shipment_ready_modal_{{shipment.shipment.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
+                          <form method="post">
+                              {% csrf_token %}
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Accept Shipment Request??</h5>
@@ -101,16 +110,20 @@ Warehouse - Shipment Location List Page
                                             </div>
                                         </p>
                                       </div>
+                                        <div>
+                                            <div style='display: none;'>{{form.shipment}}</div>
+                                            <div style='display: none;'>{{form.warehouse}}</div>
+                                            <div style='display: none;'>{{form.status}}</div>
+                                            <div style='display: none;'>{{form.note}}</div>
+                                        </div>
                                   </div>
                               </div>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-warning" data-dismiss="modal">Never Mind</button>
-                            <button type="button" 
-                                data-id="{{shipment.shipment.id}}" 
-                                data-code="{{shipment.shipment.shipment_code}}" 
-                                class="btn btn-success accept_shipment_request">Accept Shipment</button>
+                            <button type="submit" class="btn btn-success accept_shipment_request">Accept Shipment</button>
                           </div>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -126,28 +139,37 @@ Warehouse - Shipment Location List Page
 {% endblock %}
 {% block js %}
 <script>
-    $(document).ready(fucntion() {
+    $(document).ready(function() {
         $('#model').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         })
-
     })
 </script>
 <script>
     $(document).ready(function() {
+        $('.shipmentcheck_button').on('click', function() {
+            var a = $(this).data('target').split('_')
+            var id = a[a.length-1]
+            var ware = $(this).data('warehouse')
+            $('.sshipment_id').val(id);
+            $('.swarehouse_id').val(ware);
+        })
+    })
+</script>
+<!-- <script>
+    $(document).ready(function() {
         $('.accept_shipment_request').on('click', function() {
-            var id = $(this).data('id')
-            var code = $(this).data('code')
-
+            var id = $(this).data('id');
+            var code = $(this).data('code');
             $.ajax({
                 'data': {
-                    id, code,
+                    id, code
+                },
                 'success': function() {
-                    location.reload()
-                }
+                    alert(id)
                 }
             })
         })
     })
-</script>
+</script> -->
 {% endblock %}

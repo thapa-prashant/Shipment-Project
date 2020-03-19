@@ -26,10 +26,13 @@ class RegistrationForm(forms.Form):
         "name": "select_0",
         "class": "form-control"}))
 
+<<<<<<< HEAD
     alt_contact = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         'class': 'form-control mb-3',
         'placeholder': 'Your alternative contact',
     }))
+=======
+>>>>>>> e97af24cd223d838ffa2e5ad5d2b2036e37a4ad7
     address = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
     }))
@@ -54,6 +57,10 @@ class RegistrationForm(forms.Form):
         if password != confirm_password:
             raise forms.ValidationError("Passwords do not match")
         return confirm_password
+
+    def __init__(self, cities=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].choices=cities
 
 
 class ProfileEditForm(forms.Form):
@@ -110,12 +117,12 @@ MODE_OF_PAYMENT = (
     ('Already Paid', 'Already Paid'),
 )
 
+
 class ShipmentForm(forms.Form):
     receiver_name = forms.CharField(widget= forms.TextInput(attrs={
         'class': 'form-control mb-3',
         'placeholder': 'Your Name',
     }))
-
 
     receiver_contact = forms.IntegerField(widget= forms.NumberInput(attrs={
         'class': 'form-control mb-3',
@@ -193,7 +200,6 @@ class PasswordUpdateForm(forms.Form):
         'placeholder':'confirm new password'
     }))
 
-
     def clean_confirm_new_password(self):
         cleaned_data = super().clean()
         new_password = cleaned_data['new_password']
@@ -208,5 +214,4 @@ class PasswordUpdateForm(forms.Form):
 
         if len(new_password) < 6:
             raise forms.ValidationError("Your password should be at least 6 Characters")
-
         return cleaned_data

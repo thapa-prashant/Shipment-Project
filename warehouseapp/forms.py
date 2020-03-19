@@ -14,3 +14,12 @@ class WareHouseAdminLoginForm(forms.Form):
     }))
 
 
+class ShipmentLocationForm(forms.Form):
+    shipment = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'sshipment_id'
+    }))
+    warehouse = forms.CharField(widget = forms.TextInput(attrs={
+        'class': 'swarehouse_id'
+    }))
+    status = forms.CharField(widget = forms.TextInput())
+    note = forms.CharField(widget = forms.TextInput())
