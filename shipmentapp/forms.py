@@ -22,6 +22,10 @@ class RegistrationForm(forms.Form):
     contact = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
     }))
+    city = forms.ChoiceField(widget=forms.Select(attrs={
+        "name": "select_0",
+        "class": "form-control"}))
+
     alt_contact = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         'class': 'form-control mb-3',
         'placeholder': 'Your alternative contact',
@@ -38,6 +42,10 @@ class RegistrationForm(forms.Form):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control mb-3',
     }))
+
+    def __init__(self, cities=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].choices=cities
     
     def clean_confirm_password(self):
         cleaned_data = super().clean()
@@ -78,6 +86,8 @@ class ProfileEditForm(forms.Form):
         'placeholder':"Write about yourself!",
 
     }))
+
+
 
     def clean(self):
         cleaned_data = super().clean()

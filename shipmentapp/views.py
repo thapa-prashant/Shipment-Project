@@ -10,6 +10,9 @@ import requests
 from django.http import JsonResponse
 from django.conf import settings
 import json
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
+
 
 
 class HomeView(TemplateView):
@@ -89,6 +92,14 @@ class RegistrationView(FormView):
     form_class = RegistrationForm
     success_url = reverse_lazy('shipmentapp:dashboard')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        citilist_api = "http://127.0.0.1:8000/api/v1/city-list/"
+        resp = requests.get(citilist_api)
+        cities = resp.json()
+        kwargs['cities'] = cities
+        return kwargs
+
     def form_valid(self, form):
         registration_api = "http://127.0.0.1:8000/api/v1/user-registration/"
         email = form.cleaned_data["email"]
@@ -98,13 +109,15 @@ class RegistrationView(FormView):
         contact = form.cleaned_data["contact"]
         alt_contact = form.cleaned_data['alt_contact']
         address = form.cleaned_data["address"]
+        city = form.cleaned_data["city"]
         data = {'email':email,
                 'password':password,
                 'partner_full_name':partner_full_name,
                 'contact':contact,
                 'alt_contact':alt_contact,
                 'address':address,
-                'partner_company':partner_company
+                'partner_company':partner_company,
+                'city':city
                 }
 
         resp = requests.post(registration_api,data=data)
@@ -121,7 +134,6 @@ class PartnerRequiredMixin(object):
                 token = "Token " + request.session.get('token')
                 self.headers = {'Authorization': token}
                 resp = requests.get('http://127.0.0.1:8000/api/v1/user-profile/', headers=self.headers)
-                # print(resp.json())
                 if 'partner' in resp.json():
                     self.partner = resp.json()['partner']
                     self.id = resp.json()['partner']['id']
@@ -207,22 +219,69 @@ class AllShipmentsView(PartnerRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         status = self.request.GET.get('status', "all-shipment")
-        page_num = self.request.GET.get('page_num', "1")
-        print(page_num)
+        try:
+            page_num = self.request.GET.get('page', "1")
+        except:
+            page_num = 1
+        # print(page_num)
         context = super().get_context_data(**kwargs)
         context['email'] = self.email
         shipmentlist_api = "http://127.0.0.1:8000/api/v1/partner/shipment-list/?page=" + page_num + "&status=" + status
         shipments = requests.get(shipmentlist_api, headers=self.headers)
         context['shipments'] = shipments.json()['results']
+        print(shipments.json()['results'])
         context['shipment_type'] = status.upper()
         context['status'] = status
-        # context['page_num'] = page_num
         context['shipment_count'] = len(shipments.json()['results'])
-        print(shipments.json()['next'])
+
+        ## Pagination
+        ## Retrieve current Page
+        current = self.request.get_full_path()
+        currentpage_parsed = urlparse.urlparse(current)
+        try:
+            current_page = parse_qs(currentpage_parsed.query)['page'][0]
+        except:
+            current_page = 1
+
+        try:
+            current_status = parse_qs(currentpage_parsed.query)['status'][0]
+        except:
+            current_status = 'all-shipments'
+
+
+        context['current_page'] = current_page
+        context['s_status'] = current_status
+
+        # print(self.request.get_full_path())
+
+        ## Next Page
         if shipments.json()['next']:
             context['next'] = shipments.json()['next']
+            next_page_link = shipments.json()['next']
+            # print(next_page_link)
+            parsed = urlparse.urlparse(next_page_link)
+            next_p = parse_qs(parsed.query)['page'][0]
+            # print(next_p)
+            context['nextpage'] = next_p
+            context['nextpage'] = next_p
+
+        ##Previous Page
         if shipments.json()['previous']:
             context['previous'] = shipments.json()['previous']
+            # print(shipments.json()['previous'])
+
+            prev_page_link = shipments.json()['previous']
+            # print(prev_page_link)
+            parsed = urlparse.urlparse(prev_page_link)
+
+            # print(parse_qs(parsed.query))
+
+            if 'page' not in parse_qs(parsed.query):
+                context ['prevpage'] = "1"
+            else:
+                prev_p = parse_qs(parsed.query)['page'][0]
+                context['prevpage'] = prev_p
+
         return context
 
 

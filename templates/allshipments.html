@@ -2,52 +2,53 @@
 
 
 {% block css %}
-<style>
-#shipments {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  #shipments td, #shipments th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  #shipments tr:nth-child(even){background-color: #f2f2f2;}
-  
-  #shipments tr:hover {background-color: #ddd;}
-  
-  #shipments th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: rgb(33, 214, 142);
-    color: white;
-  }
-    .dataTables_filter > label{
-    color: white;
-    }
 
-.dataTables_length > label{
-    color: white;
-    }
 
-    .dataTables_info{
-    color: white;
-        background: white;
-    }
-
-.dataTables_paginate{
-    color: white;
-    background: white;
+    <style>
+    .table-responsive-stack tr {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
 }
 
-.dataTables_filter{
-    display: none;
+
+.table-responsive-stack td,
+.table-responsive-stack th {
+   display:block;
+/*
+   flex-grow | flex-shrink | flex-basis   */
+   -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
-</style>
+.table-responsive-stack .table-responsive-stack-thead {
+   font-weight: bold;
+
+}
+
+@media screen and (max-width: 768px) {
+   .table-responsive-stack tr {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      border-bottom: 3px solid #ccc;
+      display:block;
+
+   }
+   /*  IE9 FIX   */
+   .table-responsive-stack td {
+      float: left\9;
+      width:100%;
+   }
+}
+
+
+    </style>
 
 
 
@@ -62,56 +63,84 @@
 <div class="row mt-4">
   <div class="col-md-12 ">
 <div class="card bg-dark card-center">
-
-    <div class="card-body ">
+    <div class="card-body  ">
 
 {% if shipments %}
 <h3 class="mt-4 mb-4 text-center text-white" style="position: center;">"<strong>{{shipment_type}}" Shipments ({{shipment_count}})</strong></h3>
 
+<div class="container">
 
 
+   <table class="table bg-white  table-bordered table-striped table-responsive-stack"  id="tableOne">
 
+      <thead>
+         <tr style="background: #FE9745">
 
-<table id="example" class="table display nowrap bg-white" style="">
-  <thead>
-      <tr style="background: #FE9745"  >
-          <th>SN.</th>
           <th>Shipment Code</th>
         <th>Requested Date</th>
           <th>Sender Name</th>
         <th>Receiver Name</th>
+         </tr>
+      </thead>
+      <tbody>
 
-      </tr>
-  </thead>
-  <tbody>
-       {% for shipment in shipments %}
-        <tr>
-            <td>{{forloop.counter}}</td>
+            {% for shipment in shipments %}
+         <tr>
+
             <td><a href="{% url 'shipmentapp:shipmentdetail' shipment.id %}">{{ shipment.shipment_code }}</a></td>
             <td>{{shipment.created_at}}</td>
             <td>{{ shipment.sender_name }}</td>
             <td>{{shipment.receiver_name}}</td>
-
         </tr>
         {% endfor %}
-  </tbody>
-  <tfoot>
-      <tr style="" class="bg-dark text-white" >
-          <th>SN.</th>
-          <th>Shipment Code</th>
-        <th>Requested Date</th>
-          <th>Sender Name</th>
-        <th>Receiver Name</th>
 
-      </tr>
-  </tfoot>
-</table>
-    {% else %}
+
+      </tbody>
+
+   </table>
+{#pagination#}
+
+    <nav aria-label="...">
+    <ul class="pagination">
+
+
+      {% if prevpage %}
+              <li class="page-item ">
+                    <a class="page-link " href="http://127.0.0.1:3000/all-shipments/?page={{ prevpage }}&status={{ s_status }}" tabindex="-1">Previous</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                     <a class="page-link" href="http://127.0.0.1:3000/all-shipments/?page={{ prevpage }}&status={{ s_status }}" tabindex="-1">Previous</a>
+             </li>
+
+      {% endif %}
+
+    <li class="page-item active ">
+      <a class="page-link" >{{ current_page }} <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="page-item">
+        {% if nextpage %}
+            <li class="page-item">
+            <a class="page-link" href="http://127.0.0.1:3000/all-shipments/?page={{ nextpage }}&status={{ s_status }}">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="http://127.0.0.1:3000/all-shipments/?page={{ nextpage }}&status={{ s_status }}">Next</a>
+            </li>
+        {% endif %}
+  </ul>
+</nav>
+</div>
+<!-- /.container -->
+
+{% else %}
     <h3 class="text-center text-white"><strong>No Shipment Available</strong></h3>
 {% endif %}
+
+
 </div>
 </div>
-  </div>
+</div>
 </div>
 </div>
 
@@ -121,20 +150,60 @@
 
 
 {% block js %}
-{#<script type="text/javascript">#}
-{##}
-{##}
-{#$(document).ready(function() {#}
-{#    var table = $('#example').DataTable( {#}
-{#        rowReorder: {#}
-{#            selector: 'td:nth-child(2)'#}
-{#        },#}
-{#        responsive: true#}
-{#    } );#}
-{#} );#}
-{#</script>#}
+<script type="text/javascript">
+$(document).ready(function() {
+
+
+   // inspired by http://jsfiddle.net/arunpjohny/564Lxosz/1/
+   $('.table-responsive-stack').find("th").each(function (i) {
+
+      $('.table-responsive-stack td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead">'+ $(this).text() + ':</span> ');
+      $('.table-responsive-stack-thead').hide();
+   });
+
+$( '.table-responsive-stack' ).each(function() {
+  var thCount = $(this).find("th").length;
+   var rowGrow = 100 / thCount + '%';
+   //console.log(rowGrow);
+   $(this).find("th, td").css('flex-basis', rowGrow);
+});
+
+function flexTable(){
+   if ($(window).width() < 768) {
+
+   $(".table-responsive-stack").each(function (i) {
+      $(this).find(".table-responsive-stack-thead").show();
+      $(this).find('thead').hide();
+   });
+
+
+   // window is less than 768px
+   } else {
+
+
+   $(".table-responsive-stack").each(function (i) {
+      $(this).find(".table-responsive-stack-thead").hide();
+      $(this).find('thead').show();
+   });
+
+
+
+   }
+// flextable
+}
+
+flexTable();
+
+window.onresize = function(event) {
+    flexTable();
+};
+
+
+// document ready
+});
+
+</script>
 
    {% endblock %}
-
 
 {% endblock %}
