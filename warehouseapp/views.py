@@ -146,9 +146,11 @@ class WareHouseAdminShipmentLocationListView(LogisticAdminRequiredMixin, FormVie
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        shipmentlocationapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/requested-lists/"
+        status = self.request.GET.get('status', "notification_shipmentlocation")
+        shipmentlocationapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/requested-lists/?status=" + status
         response = requests.get(shipmentlocationapi_url, headers = self.headers)
         shipmentlocation_list = response.json()['results']
+        context['status'] = status
         context['shipmentlocation_list'] = shipmentlocation_list
         posts = {
             'shipment': 101,
@@ -170,14 +172,14 @@ class WareHouseAdminShipmentLocationListView(LogisticAdminRequiredMixin, FormVie
         print('form is invalid')
         return super().form_invalid(form)
 
-class WareHouseAdminNewShipmentLocationListView(LogisticAdminRequiredMixin, TemplateView):
-    template_name = "warehousetemplates/warehousenewshipmentlocationlist.html"
+# class WareHouseAdminNewShipmentLocationListView(LogisticAdminRequiredMixin, TemplateView):
+#     template_name = "warehousetemplates/warehousenewshipmentlocationlist.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        shipmentlocationapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/direct-lists/"
-        response = requests.get(shipmentlocationapi_url, headers = self.headers)
-        shipmentlocation_list = response.json()['results']
-        context['shipmentlocation_list'] = shipmentlocation_list
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         shipmentlocationapi_url = "http://127.0.0.1:8000/api/v1/ladmin/shipment-location/direct-lists/"
+#         response = requests.get(shipmentlocationapi_url, headers = self.headers)
+#         shipmentlocation_list = response.json()['results']
+#         context['shipmentlocation_list'] = shipmentlocation_list
 
-        return context
+#         return context

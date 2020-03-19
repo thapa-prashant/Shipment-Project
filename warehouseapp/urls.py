@@ -24,8 +24,8 @@ urlpatterns = [
     path('warehouse/logistic-admin/shipment-location/list/', WareHouseAdminShipmentLocationListView.as_view(), 
         name = "warehouseadminshipmentlocationlist"),
 
-    path('warehouse/logistic-admin/new-shipment-location/list/', WareHouseAdminNewShipmentLocationListView.as_view(), 
-        name = "warehouseadminnewshipmentlocationlist"),
+    # path('warehouse/logistic-admin/new-shipment-location/list/', WareHouseAdminNewShipmentLocationListView.as_view(), 
+    #     name = "warehouseadminnewshipmentlocationlist"),
 
     
     
