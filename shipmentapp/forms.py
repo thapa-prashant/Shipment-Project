@@ -26,13 +26,6 @@ class RegistrationForm(forms.Form):
         "name": "select_0",
         "class": "form-control"}))
 
-<<<<<<< HEAD
-    alt_contact = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
-        'class': 'form-control mb-3',
-        'placeholder': 'Your alternative contact',
-    }))
-=======
->>>>>>> e97af24cd223d838ffa2e5ad5d2b2036e37a4ad7
     address = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control mb-3',
     }))

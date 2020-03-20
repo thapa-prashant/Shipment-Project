@@ -94,11 +94,7 @@ class RegistrationView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-<<<<<<< HEAD
         citilist_api = "http://127.0.0.1:8000/api/v1/city-list/"
-=======
-        citilist_api = "http://127.0.0.1:8000/api/v1/partner/city-list/"
->>>>>>> e97af24cd223d838ffa2e5ad5d2b2036e37a4ad7
         resp = requests.get(citilist_api)
         cities = resp.json()
         kwargs['cities'] = cities
@@ -112,11 +108,7 @@ class RegistrationView(FormView):
         partner_company = form.cleaned_data["partner_company"]
         contact = form.cleaned_data["contact"]
         address = form.cleaned_data["address"]
-<<<<<<< HEAD
         city = form.cleaned_data["city"]
-=======
-        city = form.cleaned_data['city']
->>>>>>> e97af24cd223d838ffa2e5ad5d2b2036e37a4ad7
         data = {'email':email,
                 'password':password,
                 'partner_full_name':partner_full_name,
